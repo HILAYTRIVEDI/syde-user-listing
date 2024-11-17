@@ -1,0 +1,17 @@
+{
+    "name": "syde/syde-user-listing",
+    "description": "This Plugin will list the dummy data of users",
+    "license": "GPl",
+    "autoload": {
+        "psr-4": {
+            "Syde\\SydeUserListing\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "HILAYTRIVEDI",
+            "email": "52625748+HILAYTRIVEDI@users.noreply.github.com"
+        }
+    ],
+    "require": {}
+}
