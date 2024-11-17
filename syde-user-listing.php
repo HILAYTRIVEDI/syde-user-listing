@@ -11,3 +11,28 @@
  * 
  * @package SydeUserListing
  */
+
+//  Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+// Declare plugin constants.
+if( ! defined( 'SYDE_USER_LISTING_VERSION' ) ) {
+	define( 'SYDE_USER_LISTING_VERSION', '1.0.0' );
+}
+
+if( ! defined( 'SYDE_USER_LISTING_PLUGIN_DIR' ) ) {
+	define( 'SYDE_USER_LISTING_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+}
+
+if( ! defined( 'SYDE_USER_LISTING_PLUGIN_URL' ) ) {
+	define( 'SYDE_USER_LISTING_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+}
+
+require_once SYDE_USER_LISTING_PLUGIN_DIR .'vendor/autoload.php';
+
+//  Initilize the plugin.
+use Syde\SydeUserListing\Plugin;
+
+Plugin::init();
