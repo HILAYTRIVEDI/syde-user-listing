@@ -4,6 +4,9 @@
     "license": "GPl3.0-or-later",
     "keywords": ["wordpress", "user", "listing", "dummy", "dummy data", "dummy data generator"],
     "type": "wordpress-plugin",
+    "scripts": {
+        "phpcs": "phpcs --standard=phpcs.xml.dist"
+    },
     "authors": [
         {
             "name": "HILAYTRIVEDI",
