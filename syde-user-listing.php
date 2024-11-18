@@ -62,5 +62,10 @@ if( ! autoload() ) {
 
 //  Initilize the plugin.
 use Syde\UserListing\Plugin;
+use Syde\UserListing\Container\Container;
 
-Plugin::init();
+$plugin = new Plugin(
+    new Container()
+);
+
+$plugin->init();

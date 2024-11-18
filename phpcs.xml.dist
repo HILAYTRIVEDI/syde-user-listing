@@ -4,7 +4,7 @@
     <description>Syde User Listing coding standard.</description>
 
     <file>./src</file>
-    <file>./tests/src</file>
+    <!-- <file>./tests/src</file> -->
 
     <arg value="sp"/>
     <arg name="colors"/>

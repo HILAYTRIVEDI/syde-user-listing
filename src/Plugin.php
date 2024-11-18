@@ -1,8 +1,20 @@
 <?php
 
+/**
+ * Main bootstrap file for the plugin.
+ * 
+ * @package Syde\UserListing
+ * 
+ * @since 1.0.0
+ */
+
 declare(strict_types=1);
 
 namespace Syde\UserListing;
+
+use Syde\UserListing\Container\Container;
+use Syde\UserListing\Controllers\AdminController;
+use Syde\UserListing\Controllers\ShortcodeController;
 
 /**
  * Class Plugin
@@ -10,6 +22,8 @@ namespace Syde\UserListing;
  * @package Syde\UserListing
  */
 class Plugin{
+
+    public function __construct(private Container $container){}
     
     /**
      * Initialize the plugin.
@@ -20,9 +34,16 @@ class Plugin{
      * @static
      * 
      */
-    public static function init(): void
+    public function init(): void
     {
-        echo 'Hello World';
+        $this->registerServices();
+    }
+
+
+    public function registerServices(): void
+    {
+        $this->container->get(AdminController::class)->register();
+        $this->container->get(ShortcodeController::class);
     }
 
 }
