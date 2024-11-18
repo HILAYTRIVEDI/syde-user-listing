@@ -61,6 +61,6 @@ if( ! autoload() ) {
 }
 
 //  Initilize the plugin.
-use Syde\SydeUserListing\Plugin;
+use Syde\UserListing\Plugin;
 
 Plugin::init();

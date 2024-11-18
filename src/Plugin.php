@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Syde\SydeUserListing;
+namespace Syde\UserListing;
 
 /**
  * Class Plugin
  * 
- * @package Syde\SydeUserListing
+ * @package Syde\UserListing
  */
 class Plugin{
     
