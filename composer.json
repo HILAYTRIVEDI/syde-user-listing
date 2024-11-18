@@ -23,7 +23,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Syde\\SydeUserListing\\": "src/"
+            "Syde\\UserListing\\": "src/"
         }
     },
     "require-dev": {

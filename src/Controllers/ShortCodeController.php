@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Syde\SydeUserListing\Controllers;
+namespace Syde\UserListing\Controllers;
 
 /**
  * Class ShourtCodeController
  * 
- * @package Syde\SydeUserListing\Controllers
+ * @package Syde\UserListing\Controllers
  */
 class ShortCodeController{}

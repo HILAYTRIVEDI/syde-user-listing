@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Syde\SydeUserListing\Services;
+namespace Syde\UserListing\Services;
 
 /**
  * Class ApiService
  * 
- * @package Syde\SydeUserListing\Services
+ * @package Syde\UserListing\Services
  */
 class APIService{}

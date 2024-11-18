@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Syde\SydeUserListing\Container;
+namespace Syde\UserListing\Container;
 
 use Psr\Container\ContainerInterface;
 
@@ -10,7 +10,7 @@ use Psr\Container\ContainerInterface;
 /**
  * Class Container
  * 
- * @package Syde\SydeUserListing\Container
+ * @package Syde\UserListing\Container
  */
 class Container implements ContainerInterface{
 
