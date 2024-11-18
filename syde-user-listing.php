@@ -30,7 +30,35 @@ if( ! defined( 'SYDE_USER_LISTING_PLUGIN_URL' ) ) {
 	define( 'SYDE_USER_LISTING_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 }
 
-require_once SYDE_USER_LISTING_PLUGIN_DIR .'vendor/autoload.php';
+/**
+ * Autoload the plugin.
+ * 
+ * @return bool
+ * 
+ * @since 1.0.0
+ */
+function autoload():bool{
+	static $loaded;
+
+	if (wp_validate_boolean($loaded)) {
+		return $loaded;
+	}
+
+	$autoload_file = SYDE_USER_LISTING_PLUGIN_DIR . '/vendor/autoload.php';
+
+	if (file_exists($autoload_file) && is_readable($autoload_file)) {
+		require_once $autoload_file;
+		$loaded = true;
+		return $loaded;
+	}
+
+	$loaded = false;
+	return $loaded;
+}
+
+if( ! autoload() ) {
+	return;
+}
 
 //  Initilize the plugin.
 use Syde\SydeUserListing\Plugin;
