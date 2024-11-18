@@ -43,7 +43,7 @@ class Plugin{
     public function registerServices(): void
     {
         $this->container->get(AdminController::class)->register();
-        // $this->container->get(ShortcodeController::class)->register();
+        $this->container->get(ShortcodeController::class);
     }
 
 }
