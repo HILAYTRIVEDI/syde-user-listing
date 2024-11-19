@@ -13,16 +13,47 @@ use Syde\UserListing\Services\APIService;
  */
 class APIController{
 
+    /**
+     * APIController constructor.
+     * 
+     * @since 1.0.0
+     * 
+     * @access public
+     * 
+     * @param APIService $apiService
+     * @return void
+     * 
+     */
     public function __construct( private APIService $apiService ){
         $this->register();
     }
 
+    /**
+     * Register the api controller.
+     * 
+     * @since 1.0.0
+     * 
+     * @access public
+     * 
+     * @return void
+     * 
+     */
     public function register(): void
     {
         add_action('wp_ajax_fetch_user_details', [$this, 'fetchUserDetails']);
         add_action('wp_ajax_nopriv_fetch_user_details', [$this, 'fetchUserDetails']);
     }
 
+    /**
+     * Fetch the user details.
+     * 
+     * @since 1.0.0
+     * 
+     * @access public
+     * 
+     * @return void
+     * 
+     */
     public function fetchUserDetails(): void
     {
         // Verify nonce

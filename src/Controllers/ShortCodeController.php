@@ -3,7 +3,12 @@
 declare(strict_types=1);
 
 namespace Syde\UserListing\Controllers;
-use Syde\UserListing\Services\APIService;
+
+
+use Syde\UserListing\Controllers\APIController;
+use Syde\UserListing\Factories\ServiceFactory;
+use Syde\UserListing\Controllers\CacheController;
+
 
 /**
  * Class ShourtCodeController
@@ -21,7 +26,11 @@ class ShortcodeController{
      * @return void
      * 
      */
-    public function __construct( private APIController $apiController, private APIService $apiService )
+    public function __construct( 
+        private APIController $apiController, 
+        private ServiceFactory $serviceFactory,
+        private CacheController $cacheController
+        )
     {
         add_shortcode('syde_user_listing', [$this, 'renderShortCode']);
 
@@ -63,6 +72,11 @@ class ShortcodeController{
     public function renderShortCode($atts, $content = null): string
     {
 
+        // Check if the shortcode is disabled.
+        if (defined('SHORTCODE_DISABLED')) {
+            return '';
+        }
+
         $atts = shortcode_atts(
             [
                 'endpoint' => 'https://jsonplaceholder.typicode.com/users',
@@ -70,7 +84,17 @@ class ShortcodeController{
             $atts,
             'syde_user_listing'
         );
-        $users = $this->apiService->fetch( $atts['endpoint'] );
+
+        // Check if the cache is present.
+        $users = $this->cacheController->getUserCache('user_list', $atts['endpoint']);
+
+        if(empty($users)){
+            $users = $this->serviceFactory->createApiService()->fetch($atts['endpoint']);
+            $this->cacheController->setUserCache('user_list', $atts['endpoint'], $users);
+        }
+
+
+        // $users = $this->serviceFactory->createApiService()->fetch($atts['endpoint']);
 
         ob_start();
         include_once SYDE_USER_LISTING_PLUGIN_DIR . 'src/Views/table-info.php';

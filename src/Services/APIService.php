@@ -10,7 +10,7 @@ use Syde\UserListing\Interfaces\APIServiceInterface;
  * 
  * @package Syde\UserListing\Services
  */
-class APIService  {
+class APIService implements APIServiceInterface{
 
     private string $url;
 

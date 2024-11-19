@@ -17,4 +17,22 @@ use Psr\Container\ContainerExceptionInterface;
  *
  * @package Syde\UserListing\Exceptions
  */
-class ContainerException extends Exception implements ContainerExceptionInterface{}
+class ContainerException extends Exception implements ContainerExceptionInterface{
+
+    /**
+     * ContainerException constructor.
+     * 
+     * @since 1.0.0
+     * 
+     * @access public
+     * 
+     * @param string $message
+     * @param int $code
+     * @param Exception|null $previous
+     * @return void
+     */
+    public function __construct(string $message = '')
+    {
+        parent::__construct($message);
+    }
+}
