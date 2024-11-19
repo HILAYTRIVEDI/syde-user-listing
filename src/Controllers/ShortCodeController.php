@@ -38,6 +38,16 @@ class ShortcodeController{
         add_action('wp_enqueue_scripts', [$this, 'enqueueScript']);
     }
 
+    /**
+     * Enqueue the script file.
+     * 
+     * @since 1.0.0
+     * 
+     * @access public
+     * 
+     * @return void
+     * 
+     */
     public function enqueueScript(): void
     {
         wp_enqueue_script(
