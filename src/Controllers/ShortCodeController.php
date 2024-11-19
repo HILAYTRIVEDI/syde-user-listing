@@ -10,10 +10,10 @@ use Syde\UserListing\Services\APIService;
  * 
  * @package Syde\UserListing\Controllers
  */
-class ShortCodeController{
+class ShortcodeController{
 
     /**
-     * ShortCodeController constructor.
+     * ShortcodeController constructor.
      * 
      * @since 1.0.0
      * @access public

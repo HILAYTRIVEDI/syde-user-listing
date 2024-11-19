@@ -25,10 +25,15 @@ class APIController{
 
     public function fetchUserDetails(): void
     {
+        // Verify nonce
+        if (! wp_verify_nonce($_POST['_wpnonce'], 'syde_user_listing')) {
+            wp_send_json_error('Invalid nonce');
+            return;
+        }
 
-        $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : 0;
-        // Check type of user_id
-        if( ! is_numeric($user_id) ){
+        $user_id = isset($_POST['user_id']) && is_numeric($_POST['user_id']) ? (int)$_POST['user_id'] : 0;
+
+        if (!$user_id) {
             wp_send_json_error('Invalid user_id');
             return;
         }
