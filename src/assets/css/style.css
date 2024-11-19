@@ -1,0 +1,26 @@
+.table-responsive{
+    overflow-x: auto;
+    .syde-user-listing-table{
+        max-width: 1024px;
+        width: 100%;
+
+        #user-table-desc{
+            margin-bottom: 1rem;
+        }
+        
+        .syde-user-listing-table {
+            width: 100%;
+        }
+
+        tbody{
+            .user-row{
+                .user-link{
+                    text-decoration: none;
+                    display: block;
+                    padding: 10px 20px;
+                    font-size: 1rem;
+                }
+            }
+        }
+    }
+}

@@ -34,8 +34,33 @@ class ShortcodeController{
     {
         add_shortcode('syde_user_listing', [$this, 'renderShortCode']);
 
+        // Enqueue style file.
+        add_action('wp_enqueue_scripts', [$this, 'enqueueStyle']);
+
         // Enqueue the script file.
         add_action('wp_enqueue_scripts', [$this, 'enqueueScript']);
+    }
+
+
+    /**
+     * Enqueue the style file.
+     * 
+     * @since 1.0.0
+     * 
+     * @access public
+     * 
+     * @return void
+     * 
+     */
+    public function enqueueStyle(): void
+    {
+        wp_enqueue_style(
+            'syde-user-listing-style',
+            SYDE_USER_LISTING_PLUGIN_URL . '/src/assets/css/style.css',
+            [],
+            SYDE_USER_LISTING_VERSION,
+            'all'
+        );
     }
 
     /**

@@ -18,7 +18,7 @@
             // Prepare the rows from the response.
             foreach ($users as $key => $user) { ?>
                 <tr class="user-row" data-user-id="<?php echo esc_attr($user['id']) ?>">
-                    <td class="user-<?php esc_attr($key) ?>" data-label="<?php echo esc_attr($key) ?>">
+                    <td class="user-<?php echo esc_attr($key) ?>" data-label="<?php echo esc_attr($key) ?>">
                         <a href="#" class="user-link" data-user-id="<?php echo esc_attr($user['id']) ?>">
                             <?php echo esc_attr($user['id']) ?>
                         </a>
