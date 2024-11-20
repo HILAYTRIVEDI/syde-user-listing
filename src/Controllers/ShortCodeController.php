@@ -123,13 +123,11 @@ class ShortcodeController{
         // Check if the cache is present.
         $users = $this->cacheController->getUserCache('user_list', $atts['endpoint']);
 
-        if(empty($users)){
+        if(empty($users) || ! is_array($users)){
             $users = $this->serviceFactory->createApiService()->fetch($atts['endpoint']);
-            $this->cacheController->setUserCache('user_list', $atts['endpoint'], $users);
+            $this->cacheController->setUserCache('user_list', $users);
         }
 
-
-        // $users = $this->serviceFactory->createApiService()->fetch($atts['endpoint']);
 
         ob_start();
         include_once SYDE_USER_LISTING_PLUGIN_DIR . 'src/Views/table-info.php';

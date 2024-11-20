@@ -1,26 +1,38 @@
-.table-responsive{
+.table-responsive {
     overflow-x: auto;
-    .syde-user-listing-table{
-        max-width: 1024px;
-        width: 100%;
+}
 
-        #user-table-desc{
-            margin-bottom: 1rem;
-        }
-        
-        .syde-user-listing-table {
-            width: 100%;
-        }
+.syde-user-listing-table {
+    max-width: 1024px;
+    width: 100%;
+}
 
-        tbody{
-            .user-row{
-                .user-link{
-                    text-decoration: none;
-                    display: block;
-                    padding: 10px 20px;
-                    font-size: 1rem;
-                }
-            }
-        }
-    }
+#user-table-desc {
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.syde-user-listing-table thead th {
+    text-align: left;
+}
+
+.syde-user-listing-table tbody .user-row .user-link {
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px 20px 10px 0;
+    font-size: 1rem;
+    position: relative;
+    transition: all 0.3s ease-in-out;
+}
+
+.syde-user-listing-table tbody .user-row .user-link::after {
+    content: '';
+    display: block;
+    border-bottom: 1px solid #000;
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+}
+
+.syde-user-listing-table tbody .user-row .user-link:hover::after {
+    transform: scaleX(1);
 }
