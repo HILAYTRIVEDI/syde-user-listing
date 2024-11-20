@@ -39,10 +39,10 @@ class CacheController{
      * 
      * @param string $cache_name
      * @param string $endpoint
-     * @return array
+     * @return array | bool
      * 
      */
-    public function getUserCache( string $cache_name, string $endpoint ): array{
+    public function getUserCache( string $cache_name, string $endpoint ): array | bool{
         $cache = $this->serviceFactory->createCacheService()->getCache( $cache_name, $endpoint );
         return $cache;
     }

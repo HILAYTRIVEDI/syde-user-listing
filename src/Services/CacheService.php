@@ -23,11 +23,10 @@ class CacheService
      * @access public
      * 
      * @param string $cache_key
-     * @return array
+     * @return array | bool
      */
-    public function getCache(string $cache_key): array
+    public function getCache(string $cache_key): array|bool
     {
-
         $data = get_transient($cache_key);
         return $data;
     }
