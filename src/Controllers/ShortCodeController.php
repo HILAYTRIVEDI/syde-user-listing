@@ -109,12 +109,16 @@ class ShortcodeController{
 
         // Check if the shortcode is disabled.
         if (defined('SHORTCODE_DISABLED')) {
-            return '';
+            return esc_html__('Shortcode is disabled.', 'syde-user-listing');
         }
+
+        // Get api_endpoint_name from options.
+        $api_endpoint_name = get_option('api_endpoint_name') ?? 'https://jsonplaceholder.typicode.com';
+        $api_endpoint_url = get_option('api_endpoint_url') ?? '/users';
 
         $atts = shortcode_atts(
             [
-                'endpoint' => 'https://jsonplaceholder.typicode.com/users',
+                'endpoint' => $api_endpoint_url . $api_endpoint_name,
             ],
             $atts,
             'syde_user_listing'
