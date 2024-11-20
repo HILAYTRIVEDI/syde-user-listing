@@ -16,6 +16,9 @@
                     user_id: userId,
                     _wpnonce: syde_user_listing.nonce
                 },
+                beforeSend: function () {
+                    document.getElementById('user-additional-data').innerHTML = '<div class="syde-user-listing-loading-spinner">Fetching....</div>';
+                },
                 success: function (response)
                 {
                     if(response.success){
