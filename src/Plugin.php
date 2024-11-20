@@ -33,7 +33,6 @@ class Plugin
      * @param Container $container An instance of the container class.
      * @return void
      * @since 1.0.0
-     * @access public
      */
     public function __construct(private Container $container) {}
 
@@ -46,7 +45,6 @@ class Plugin
      * 
      * @return void
      * @since 1.0.0
-     * @access public
      */
     public function init(): void
     {
@@ -63,7 +61,6 @@ class Plugin
      * 
      * @return void
      * @since 1.0.0
-     * @access public
      */
     public function registerServices(): void
     {
