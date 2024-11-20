@@ -39,7 +39,6 @@ class Plugin{
         $this->registerServices();
     }
 
-
     public function registerServices(): void
     {
         $this->container->get(AdminController::class)->register();
