@@ -4,28 +4,14 @@ declare(strict_types=1);
 
 namespace Syde\UserListing\Controllers;
 
-use Syde\UserListing\Interfaces\MenuPageFields;
-
 /**
  * Class MenuPageController
  * 
  * @since 1.0.0
  * @access public
  */
-class MenuPageController implements MenuPageFields
+class MenuPageController
 {
-
-    /**
-     * MenuPageController constructor.
-     * 
-     * @since 1.0.0
-     * @access public
-     */
-    public function __construct()
-    {
-        add_action('admin_init', [$this, 'registerMenuPageField']);
-    }
-
     /**
      * Register the menu page field.
      * 
@@ -36,8 +22,10 @@ class MenuPageController implements MenuPageFields
     public function registerMenuPageField(
         string $menuSlug,
         string $fieldName,
+        string | callable $sanitizer
     ): void
     {
-        // register_setting();
+        // Register settings with sanitization
+        register_setting( $menuSlug , $fieldName, $sanitizer );
     }
 }
