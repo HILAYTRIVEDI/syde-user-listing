@@ -19,7 +19,8 @@
 .syde-user-listing-table tbody .user-row .user-link {
     text-decoration: none;
     display: inline-block;
-    padding: 10px 20px 10px 0;
+    padding: 10px 0px;
+    width: 100%;
     font-size: 1rem;
     position: relative;
     transition: all 0.3s ease-in-out;

@@ -120,6 +120,11 @@ class ShortcodeController{
             'syde_user_listing'
         );
 
+        /**
+         * Action: Before fetching user data.
+         */
+        do_action('syde_user_listing_before_fetch', $atts);
+
         // Check if the cache is present.
         $users = $this->cacheController->getUserCache('user_list', $atts['endpoint']);
 
@@ -128,6 +133,10 @@ class ShortcodeController{
             $this->cacheController->setUserCache('user_list', $users);
         }
 
+        /**
+        * Filter: Modify users before rendering.
+        */
+        $users = apply_filters('syde_user_listing_users', $users, $atts);
 
         ob_start();
         include_once SYDE_USER_LISTING_PLUGIN_DIR . 'src/Views/table-info.php';
