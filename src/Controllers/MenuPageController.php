@@ -7,7 +7,7 @@ namespace Syde\UserListing\Controllers;
 /**
  * Class MenuPageController
  *
- * Handles the registration of settings and menu page fields within the WordPress admin panel.
+ * Handles the registration of settings and menu page fields within the admin panel.
  * 
  * @package Syde\UserListing\Controllers
  * @since 1.0.0
