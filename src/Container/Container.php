@@ -31,7 +31,7 @@ class Container implements ContainerInterface
     private array $bindings = [];
 
     /**
-     * The instances of the container. Stores already resolved instances to 
+     * The instances of the container. Stores already resolved instances to
      * avoid redundant resolution.
      *
      * @var array<string, object>
@@ -108,7 +108,8 @@ class Container implements ContainerInterface
 
     /**
      * Resolve a class dynamically by inspecting its constructor and resolving dependencies.
-     * This method uses reflection to analyze the constructor parameters and inject any dependencies.
+     * This method uses reflection to analyze the constructor parameters and inject
+     * any dependencies.
      *
      * @param string $id The class name to resolve.
      * @return object The resolved class instance.
@@ -144,12 +145,12 @@ class Container implements ContainerInterface
             );
 
             return $reflectionClass->newInstanceArgs($dependencies);
-        } catch (\Exception $e) {
+        } catch (\Exception $error) {
             throw new ContainerException(
                 sprintf(
                     'Error resolving class %s: %s',
                     esc_html($id),
-                    esc_html($e->getMessage())
+                    esc_html($error->getMessage())
                 )
             );
         }

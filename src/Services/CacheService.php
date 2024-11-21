@@ -25,7 +25,7 @@ class CacheService
      * @param string $cacheKey The key under which the data is stored in the cache.
      * @return mixed Cached data if it exists and is valid, or false if not.
      */
-    public function getCache(string $cacheKey): mixed
+    public function returnCache(string $cacheKey): mixed
     {
         return get_transient($cacheKey);
     }
@@ -44,7 +44,7 @@ class CacheService
      * @param int $expiration The expiration time for the cache in seconds (default: 12 hours).
      * @return void
      */
-    public function setCache(string $cacheKey, mixed $data, int $expiration = 12 * HOUR_IN_SECONDS): void
+    public function cacheDataWithExpiration(string $cacheKey, mixed $data, int $expiration = 12 * HOUR_IN_SECONDS): void
     {
         set_transient($cacheKey, $data, $expiration);
     }
@@ -80,6 +80,6 @@ class CacheService
      */
     public function hasCache(string $cacheKey): bool
     {
-        return $this->getCache($cacheKey) !== false;
+        return $this->returnCache($cacheKey) !== false;
     }
 }

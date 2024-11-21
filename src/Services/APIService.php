@@ -45,8 +45,8 @@ class APIService implements APIServiceInterface
         }
 
         // Validate the URL's accessibility.
-        $head_response = wp_remote_head($this->url);
-        if (is_wp_error($head_response) || wp_remote_retrieve_response_code($head_response) !== 200) {
+        $headResponse = wp_remote_head($this->url);
+        if (is_wp_error($headResponse) || wp_remote_retrieve_response_code($headResponse) !== 200) {
             throw new \InvalidArgumentException('URL is not accessible.');
         }
 
@@ -57,11 +57,13 @@ class APIService implements APIServiceInterface
         // Send the GET request and retrieve the response body.
         $response = wp_safe_remote_get($this->url, ['headers' => $headers]);
         if (is_wp_error($response)) {
-            throw new \RuntimeException('Error fetching data from the API: ' . $response->get_error_message());
+            throw new \RuntimeException(
+                'Error fetching data from the API: ' . $response->get_error_message()
+            );
         }
 
-        $response_body = wp_remote_retrieve_body($response);
-        $decoded_response = json_decode($response_body, true);
+        $responseBody = wp_remote_retrieve_body($response);
+        $decodedResponse = json_decode($responseBody, true);
 
         // Ensure the response is a valid JSON object.
         if (json_last_error() !== JSON_ERROR_NONE) {
@@ -69,9 +71,13 @@ class APIService implements APIServiceInterface
         }
 
         // Allow modifications to the decoded response via a filter.
-        $decoded_response = apply_filters('syde_user_listing_api_service_response', $decoded_response, $this->url);
+        $decodedResponse = apply_filters(
+            'syde_user_listing_api_service_response',
+            $decodedResponse,
+            $this->url
+        );
 
-        return $decoded_response;
+        return $decodedResponse;
     }
 
     /**
@@ -79,21 +85,21 @@ class APIService implements APIServiceInterface
      *
      * Fetches user details from the API for the given user ID, using the base URL or a default URL.
      *
-     * @param int $user_id The ID of the user to fetch details for.
+     * @param int $userId The ID of the user to fetch details for.
      * @return array The user's details as an associative array.
      */
-    public function getUserDetails(int $user_id): array
+    public function UserDetails(int $userId): array
     {
         // Use the base URL or a default URL if not set.
-        $base_url = $this->url ?? 'https://jsonplaceholder.typicode.com/users';
+        $baseUrl = $this->url ?? 'https://jsonplaceholder.typicode.com/users';
 
         // Construct the user-specific endpoint URL.
-        $user_url = trailingslashit($base_url) . $user_id;
+        $userUrl = trailingslashit($baseUrl) . $userId;
 
         // Allow modifications to the user-specific URL via a filter.
-        $user_url = apply_filters('syde_user_listing_api_service_user_url', $user_url, $user_id);
+        $userUrl = apply_filters('syde_user_listing_api_service_user_url', $userUrl, $userId);
 
         // Fetch and return the user details.
-        return $this->fetch($user_url);
+        return $this->fetch($userUrl);
     }
 }

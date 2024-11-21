@@ -83,6 +83,8 @@ class AdminController
     {
         ob_start();
         include_once SYDE_USER_LISTING_PLUGIN_DIR . 'src/Views/admin-page.php';
-        echo ob_get_clean();
+        $output = ob_get_clean();
+
+        echo wp_kses_post($output);
     }
 }

@@ -52,8 +52,9 @@ class APIController
     /**
      * Fetch user details from the API.
      *
-     * Processes the AJAX request, verifies nonce security, and fetches the user details
-     * using the provided user ID. Returns the user details as HTML if successful.
+     * Processes the AJAX request, verifies nonce security, and fetches the user
+     * details using the provided user ID. Returns the user details as HTML
+     * if successful.
      *
      * @since 1.0.0
      *
@@ -61,23 +62,28 @@ class APIController
      */
     public function fetchUserDetails(): void
     {
-        // Verify nonce for security
-        if (!wp_verify_nonce($_POST['_wpnonce'], 'syde_user_listing')) {
+        $nonce = sanitize_text_field(
+            isset($_POST['_wpnonce'])
+            ? wp_unslash($_POST['_wpnonce'])
+            : ''
+        );
+        if (!wp_verify_nonce($nonce, 'syde_user_listing')) {
             wp_send_json_error('Invalid nonce');
             return;
         }
 
-        // Get and validate the user ID from POST
-        $user_id = isset($_POST['user_id']) && is_numeric($_POST['user_id']) ? (int) $_POST['user_id'] : 0;
 
-        if (!$user_id) {
+        // Get and validate the user ID from POST
+        $userId = isset($_POST['user_id']) ? absint($_POST['user_id']) : 0;
+
+        if (!$userId) {
             wp_send_json_error('Invalid user_id');
             return;
         }
 
-        $user_details = $this->apiService->getUserDetails($user_id);
+        $userDetails = $this->apiService->UserDetails($userId);
 
-        if (empty($user_details)) {
+        if (empty($userDetails)) {
             wp_send_json_error('User not found');
             return;
         }
@@ -85,10 +91,10 @@ class APIController
         // Capture the user details HTML for response
         ob_start();
         require_once SYDE_USER_LISTING_PLUGIN_DIR . 'src/Views/single-user.php';
-        $user_details_html = ob_get_clean();
+        $userDetailsHtml = ob_get_clean();
 
         // Return the success response with HTML content
-        wp_send_json_success($user_details_html);
+        wp_send_json_success($userDetailsHtml);
         wp_die();
     }
 }

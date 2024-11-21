@@ -11,9 +11,10 @@ use Syde\UserListing\Controllers\CacheController;
 /**
  * Class ShortcodeController
  *
- * This class is responsible for handling the shortcode functionalities in the Syde User Listing plugin.
- * It includes registering the shortcode, enqueueing the required scripts and styles, and rendering the
- * shortcode output for displaying user listings.
+ * This class is responsible for handling the shortcode functionalities in the
+ * Syde User Listing plugin.It includes registering the shortcode, enqueueing
+ * the required scripts and styles, and rendering the shortcode output for
+ * displaying user listings.
  *
  * @package Syde\UserListing\Controllers
  * @since 1.0.0
@@ -47,7 +48,8 @@ class ShortcodeController
     /**
      * Enqueue the style file for the frontend.
      *
-     * This method adds the CSS stylesheet for the Syde User Listing plugin to the frontend of the site.
+     * This method adds the CSS stylesheet for the Syde User Listing plugin to
+     * the frontend of the site.
      *
      * @since 1.0.0
      *
@@ -67,8 +69,9 @@ class ShortcodeController
     /**
      * Enqueue the script file for the frontend.
      *
-     * This method adds the JavaScript file for the Syde User Listing plugin to the frontend of the site
-     * and also localizes the script to pass necessary data like the AJAX URL and a security nonce.
+     * This method adds the JavaScript file for the Syde User Listing plugin to
+     * the frontend of the site and also localizes the script to pass necessary
+     * data like the AJAX URL and a security nonce.
      *
      * @since 1.0.0
      *
@@ -97,8 +100,10 @@ class ShortcodeController
     /**
      * Render the shortcode output.
      *
-     * This method is responsible for rendering the output of the [syde_user_listing] shortcode. It fetches
-     * the user data either from the cache or directly from the API and then displays the results in a table format.
+     * This method is responsible for rendering the output of the
+     * [syde_user_listing] shortcode. It fetches the user data either from the
+     * cache or directly from the API and then displays the results in a table
+     * format.
      *
      * @since 1.0.0
      *
@@ -115,13 +120,14 @@ class ShortcodeController
         }
 
         // Get the API endpoint from the plugin options, or use defaults.
-        $api_endpoint_name = get_option('api_endpoint_name') ?? 'https://jsonplaceholder.typicode.com';
-        $api_endpoint_url = get_option('api_endpoint_url') ?? '/users';
+        $apiEndpointName = get_option('api_endpoint_name')
+        ?? 'https://jsonplaceholder.typicode.com';
+        $apiEndpointUrl = get_option('api_endpoint_url') ?? '/users';
 
         // Merge shortcode attributes with defaults.
         $atts = shortcode_atts(
             [
-                'endpoint' => $api_endpoint_url . $api_endpoint_name,
+                'endpoint' => $apiEndpointUrl . $apiEndpointName,
             ],
             $atts,
             'syde_user_listing'
@@ -134,17 +140,18 @@ class ShortcodeController
         do_action('syde_user_listing_before_fetch', $atts);
 
         // Attempt to fetch cached user data for the given endpoint.
-        $users = $this->cacheController->getUserCache('user_list', $atts['endpoint']);
+        $users = $this->cacheController->userCache('user_list', $atts['endpoint']);
 
         if (empty($users) || !is_array($users)) {
             // Fetch fresh data from the API if cache is empty or not valid.
             $users = $this->serviceFactory->createApiService()->fetch($atts['endpoint']);
-            $this->cacheController->setUserCache('user_list', $users);
+            $this->cacheController->cacheDataWithExpiration('user_list', $users);
         }
 
         /**
          * Filter hook to modify users before rendering.
-         * Allows other plugins or parts of the system to modify the users list before it is displayed.
+         * Allows other plugins or parts of the system to modify the users
+         * list before it is displayed.
          */
         $users = apply_filters('syde_user_listing_users', $users, $atts);
 
@@ -153,6 +160,8 @@ class ShortcodeController
         include_once SYDE_USER_LISTING_PLUGIN_DIR . 'src/Views/table-info.php';
 
         // Return the generated HTML output.
-        return ob_get_clean();
+        $output = ob_get_clean();
+
+        return wp_kses_post($output);
     }
 }

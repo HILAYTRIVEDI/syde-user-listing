@@ -33,7 +33,7 @@ class CacheController
      *
      * Fetches cached user data from the cache service.
      *
-     * @param string $cache_name The name of the cache (e.g., 'user_list').
+     * @param string $cacheName The name of the cache (e.g., 'user_list').
      * @param string $endpoint The API endpoint associated with the cache.
      *
      * @return array|bool The cached user data, or false if not found.
@@ -41,10 +41,10 @@ class CacheController
      * @since 1.0.0
      * @access public
      */
-    public function getUserCache(string $cache_name, string $endpoint): array|bool
+    public function userCache(string $cacheName, string $endpoint): array|bool
     {
         // Fetch cache using the cache service
-        $cache = $this->serviceFactory->createCacheService()->getCache($cache_name, $endpoint);
+        $cache = $this->serviceFactory->createCacheService()->returnCache($cacheName, $endpoint);
         return $cache;
     }
 
@@ -53,16 +53,16 @@ class CacheController
      *
      * Sets the cached user data in the cache service.
      *
-     * @param string $cache_name The name of the cache (e.g., 'user_list').
-     * @param array $user_info The user data to be cached.
+     * @param string $cacheName The name of the cache (e.g., 'user_list').
+     * @param array $userInfo The user data to be cached.
      *
      * @return void
      *
      * @since 1.0.0
      */
-    public function setUserCache(string $cache_name, array $user_info): void
+    public function cacheDataWithExpiration(string $cacheName, array $userInfo): void
     {
         // Store user data in the cache
-        $this->serviceFactory->createCacheService()->setCache($cache_name, $user_info);
+        $this->serviceFactory->createCacheService()->cacheDataWithExpiration($cacheName, $userInfo);
     }
 }
