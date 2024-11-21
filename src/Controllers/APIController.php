@@ -76,20 +76,11 @@ class APIController
             return;
         }
 
-        // Check if the user data is cached
-        $user_details = $this->cacheController->getUserCache('user_details', (string)$user_id);
+        $user_details = $this->apiService->getUserDetails($user_id);
 
         if (empty($user_details)) {
-            // Fetch user details from API service if not cached
-            $user_details = $this->apiService->getUserDetails($user_id);
-
-            if (empty($user_details)) {
-                wp_send_json_error('User not found');
-                return;
-            }
-
-            // Cache the result to avoid future API calls
-            $this->cacheController->setUserCache('user_details', $user_details, 24 * HOUR_IN_SECONDS);
+            wp_send_json_error('User not found');
+            return;
         }
 
         // Capture the user details HTML for response
