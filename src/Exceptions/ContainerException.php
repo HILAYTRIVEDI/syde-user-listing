@@ -16,7 +16,8 @@ use Psr\Container\ContainerExceptionInterface;
 /**
  * Custom exception class for container-related errors.
  *
- * Implements PSR-11's ContainerExceptionInterface to indicate errors related to dependency injection or service resolution.
+ * Implements PSR-11's ContainerExceptionInterface to indicate errors related to
+ * dependency injection or service resolution.
  *
  * @since 1.0.0
  *

@@ -31,7 +31,8 @@ class Container implements ContainerInterface
     private array $bindings = [];
 
     /**
-     * The instances of the container. Stores already resolved instances to avoid redundant resolution.
+     * The instances of the container. Stores already resolved instances to 
+     * avoid redundant resolution.
      *
      * @var array<string, object>
      */
@@ -85,7 +86,12 @@ class Container implements ContainerInterface
         }
 
         // If no binding or class is found, throw an exception
-        throw new ContainerException("Class {$id} cannot be resolved or is not registered.");
+        throw new ContainerException(
+            sprintf(
+                'Error resolving class %s',
+                esc_html($id)
+            )
+        );
     }
 
     /**
@@ -116,7 +122,12 @@ class Container implements ContainerInterface
 
             // Ensure the class is instantiable
             if (!$reflectionClass->isInstantiable()) {
-                throw new ContainerException("Class {$id} is not instantiable.");
+                throw new ContainerException(
+                    sprintf(
+                        'Class %s is not instantiable.',
+                        esc_html($id)
+                    )
+                );
             }
 
             $constructor = $reflectionClass->getConstructor();
@@ -134,7 +145,13 @@ class Container implements ContainerInterface
 
             return $reflectionClass->newInstanceArgs($dependencies);
         } catch (\Exception $e) {
-            throw new ContainerException("Error resolving class {$id}: " . $e->getMessage());
+            throw new ContainerException(
+                sprintf(
+                    'Error resolving class %s: %s',
+                    esc_html($id),
+                    esc_html($e->getMessage())
+                )
+            );
         }
     }
 
@@ -159,7 +176,13 @@ class Container implements ContainerInterface
 
         // Handle union types or non-class types (e.g., int, string)
         if ($type instanceof \ReflectionUnionType) {
-            throw new ContainerException("Union types are not supported for parameter '{$parameter->getName()}' in class {$className}.");
+            throw new ContainerException(
+                sprintf(
+                    'Union types are not supported for parameter %s in class %s',
+                    esc_html($parameter->getName()),
+                    esc_html($className)
+                )
+            );
         }
 
         if ($type instanceof \ReflectionNamedType && !$type->isBuiltin()) {
@@ -167,6 +190,12 @@ class Container implements ContainerInterface
             return $this->get($type->getName());
         }
 
-        throw new ContainerException("Unsupported type for parameter '{$parameter->getName()}' in class {$className}.");
+        throw new ContainerException(
+            sprintf(
+                'Unsupported type for parameter %s in class %s',
+                esc_html($parameter->getName()),
+                esc_html($className)
+            )
+        );
     }
 }
