@@ -12,10 +12,10 @@ use ReflectionParameter;
 /**
  * Class Container
  *
- * A simple Dependency Injection (DI) container that implements autowiring. 
- * It resolves dependencies automatically by inspecting class constructors and 
+ * A simple Dependency Injection (DI) container that implements autowiring.
+ * It resolves dependencies automatically by inspecting class constructors and
  * supports manual bindings of classes to resolvers.
- * 
+ *
  * This implementation is based on the PSR-11 container interface.
  *
  * @package Syde\UserListing\Container
@@ -23,7 +23,7 @@ use ReflectionParameter;
 class Container implements ContainerInterface
 {
     /**
-     * The bindings of the container. 
+     * The bindings of the container.
      * Manual bindings can be set using the `set` method.
      *
      * @var array<string, callable>
@@ -32,7 +32,7 @@ class Container implements ContainerInterface
 
     /**
      * The instances of the container. Stores already resolved instances to avoid redundant resolution.
-     * 
+     *
      * @var array<string, object>
      */
     private array $instances = [];
@@ -46,7 +46,7 @@ class Container implements ContainerInterface
     private array $reflectionCache = [];
 
     /**
-     * Set a binding for a given identifier. 
+     * Set a binding for a given identifier.
      * Use this method to manually define how a class or interface should be resolved.
      *
      * @param string $id The identifier of the binding (e.g., class name or interface).
@@ -123,12 +123,12 @@ class Container implements ContainerInterface
 
             // If the class has no constructor, instantiate it directly
             if (!$constructor) {
-                return new $id;
+                return new $id();
             }
 
             // Resolve constructor parameters and inject dependencies
             $dependencies = array_map(
-                fn(ReflectionParameter $parameter) => $this->resolveParameter($parameter, $id),
+                fn (ReflectionParameter $parameter) => $this->resolveParameter($parameter, $id),
                 $constructor->getParameters()
             );
 

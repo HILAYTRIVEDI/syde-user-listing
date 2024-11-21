@@ -8,30 +8,29 @@ use Syde\UserListing\Interfaces\APIServiceInterface;
 
 /**
  * Class APIService
- * 
+ *
  * Handles API requests and responses with WordPress HTTP functions.
- * 
+ *
  * @package Syde\UserListing\Services
  */
 class APIService implements APIServiceInterface
 {
     /**
      * The base URL for API requests.
-     * 
-     * @var string
+     *
      */
     private string $url;
 
     /**
      * Fetch data from an API endpoint.
-     * 
+     *
      * This method sends a GET request to the specified URL with optional headers,
      * and returns the decoded JSON response as an associative array.
-     * 
+     *
      * @param string $url The API endpoint to fetch data from.
      * @param array $headers Optional headers to include in the request.
      * @return array The response data as an associative array.
-     * 
+     *
      * @throws \InvalidArgumentException If the URL is invalid or not accessible.
      */
     public function fetch(string $url, array $headers = []): array
@@ -77,9 +76,9 @@ class APIService implements APIServiceInterface
 
     /**
      * Retrieve user details by user ID.
-     * 
+     *
      * Fetches user details from the API for the given user ID, using the base URL or a default URL.
-     * 
+     *
      * @param int $user_id The ID of the user to fetch details for.
      * @return array The user's details as an associative array.
      */

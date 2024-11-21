@@ -17,20 +17,20 @@ use Psr\Container\ContainerExceptionInterface;
  * Custom exception class for container-related errors.
  *
  * Implements PSR-11's ContainerExceptionInterface to indicate errors related to dependency injection or service resolution.
- * 
+ *
  * @since 1.0.0
- * 
+ *
  * @package Syde\UserListing\Exceptions
  */
 class ContainerException extends Exception implements ContainerExceptionInterface
 {
     /**
      * Constructs a new ContainerException.
-     * 
+     *
      * @since 1.0.0
-     * 
+     *
      * @access public
-     * 
+     *
      * @param string $message Optional. The error message.
      * @param int $code Optional. The error code. Defaults to 0.
      * @param Exception|null $previous Optional. The previous exception used for exception chaining.

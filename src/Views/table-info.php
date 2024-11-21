@@ -5,6 +5,9 @@
         </caption>
         <thead>
             <?php
+
+            declare(strict_types=1);
+
             // Prepare column headers dyamically from the response keys and only first 4 keys.
             $keys = array_slice(array_keys($users[0]), 0, 4);
             foreach ($keys as $key) {
@@ -39,7 +42,7 @@
                         </a>
                     </td>
                 </tr>
-            <?php
+                <?php
             }
             ?>
         </tbody>

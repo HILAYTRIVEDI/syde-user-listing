@@ -9,25 +9,24 @@ use Syde\UserListing\Controllers\CacheController;
 
 /**
  * Class APIController
- * 
+ *
  * Handles AJAX requests for fetching user details from an external API.
- * 
+ *
  * @package Syde\UserListing\Controllers
  * @since 1.0.0
  */
 class APIController
 {
-
     /**
      * APIController constructor.
-     * 
+     *
      * Initializes the controller by registering necessary actions.
-     * 
+     *
      * @param APIService $apiService The API service responsible for fetching user details.
      * @param CacheController $cacheController The cache controller for managing caching.
-     * 
+     *
      * @since 1.0.0
-     * 
+     *
      * @return void
      */
     public function __construct(private APIService $apiService, private CacheController $cacheController)
@@ -37,11 +36,11 @@ class APIController
 
     /**
      * Register actions for fetching user details.
-     * 
+     *
      * Hooks into WordPress AJAX actions to process requests for user data.
-     * 
+     *
      * @since 1.0.0
-     * 
+     *
      * @return void
      */
     public function register(): void
@@ -52,12 +51,12 @@ class APIController
 
     /**
      * Fetch user details from the API.
-     * 
+     *
      * Processes the AJAX request, verifies nonce security, and fetches the user details
      * using the provided user ID. Returns the user details as HTML if successful.
-     * 
+     *
      * @since 1.0.0
-     * 
+     *
      * @return void
      */
     public function fetchUserDetails(): void
@@ -69,7 +68,7 @@ class APIController
         }
 
         // Get and validate the user ID from POST
-        $user_id = isset($_POST['user_id']) && is_numeric($_POST['user_id']) ? (int)$_POST['user_id'] : 0;
+        $user_id = isset($_POST['user_id']) && is_numeric($_POST['user_id']) ? (int) $_POST['user_id'] : 0;
 
         if (!$user_id) {
             wp_send_json_error('Invalid user_id');

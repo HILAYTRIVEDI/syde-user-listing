@@ -1,5 +1,9 @@
 <div class="wrap">
-    <h1><?php echo esc_html__('API Endpoint Settings', 'text-domain'); ?></h1>
+    <h1><?php
+
+    declare(strict_types=1);
+
+    echo esc_html__('API Endpoint Settings', 'text-domain'); ?></h1>
     <form method="post" action="options.php">
         <?php
         settings_fields('api_endpoint_settings');
@@ -18,7 +22,7 @@
                     <input type="text" name="api_endpoint_name" value="<?php echo esc_attr(get_option('api_endpoint_name')); ?>" class="regular-text">
                 </td>
             </tr>
-            <?php 
+            <?php
                 // additional_api_endpoint_fields hook to add additional fields.
                 do_action('additional_api_endpoint_fields');
             ?>

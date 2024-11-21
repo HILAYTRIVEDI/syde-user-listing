@@ -8,16 +8,18 @@ use Syde\UserListing\Controllers\MenuPageController;
 
 /**
  * Class AdminController
- * 
+ *
  * @package Syde\UserListing\Controllers
  */
-class AdminController{
-
-    public function __construct( private MenuPageController $menuPageController ){}
+class AdminController
+{
+    public function __construct(private MenuPageController $menuPageController)
+    {
+    }
 
     /**
      * Register the admin menu.
-     * 
+     *
      * @return void
      * @since 1.0.0
      * @access public
@@ -26,12 +28,11 @@ class AdminController{
     {
         add_action('admin_menu', [$this, 'addApiEndpointMenu']);
         add_action('admin_init', [$this, 'registerAPIEndpointFields']);
-
     }
 
     /**
      * Add the API endpoint menu.
-     * 
+     *
      * @return void
      * @since 1.0.0
      * @access public
@@ -51,11 +52,11 @@ class AdminController{
 
     /**
      * Render the API endpoint page.
-     * 
+     *
      * @return void
      * @since 1.0.0
      * @access public
-     * 
+     *
      * @action admin_menu
      */
     public function registerAPIEndpointFields(): void

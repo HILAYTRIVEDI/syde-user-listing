@@ -1,33 +1,34 @@
-(function ($)
-{
+(function ($) {
     let userID = 0;
 
     // Cache user data to minimize redundant AJAX calls
     const cachedUserData = {};
 
-    document.querySelectorAll('.user-link').forEach(link =>
-    {
-        link.addEventListener('click', function (e)
+    document.querySelectorAll('.user-link').forEach(
+        link =>
         {
-            e.preventDefault();
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
 
-            const userId = e.target.dataset.userId;
+                const userId = e.target.dataset.userId;
 
-            // Short circuit if the user ID is unchanged
-            if (userId === userID) return;
-            userID = userId;
+                // Short circuit if the user ID is unchanged
+                if (userId === userID) {
+                    return;
+                }
+                userID = userId;
 
-            // Check if user data is already cached
-            if (cachedUserData[userId])
-            {
-                displayUserData(cachedUserData[userId]);
-                return;
-            }
+                // Check if user data is already cached
+                if (cachedUserData[userId]) {
+                    displayUserData(cachedUserData[userId]);
+                    return;
+                }
 
-            // Perform AJAX call for new user data
-            fetchUserData(userId);
-        });
-    });
+                // Perform AJAX call for new user data
+                fetchUserData(userId);
+            });
+        }
+    );
 
     function fetchUserData(userId)
     {
@@ -45,12 +46,10 @@
             },
             success: (response) =>
             {
-                if (response.success)
-                {
+                if (response.success) {
                     cachedUserData[userId] = response.data; // Cache the data
                     displayUserData(response.data);
-                } else
-                {
+                } else {
                     console.error(response.data);
                 }
             },
