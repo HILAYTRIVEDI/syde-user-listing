@@ -22,8 +22,7 @@
                 name="psr4"
                 type="array"
                 value="
-                    Inpsyde\SydeUserListing=>src,
-                    Inpsyde\SydeUserListing\Tests=>tests/unit
+                    Inpsyde\SydeUserListing=>src
                 "/>
         </properties>
     </rule>
