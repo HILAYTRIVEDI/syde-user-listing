@@ -58,7 +58,7 @@ class APIService implements APIServiceInterface
         $response = wp_safe_remote_get($this->url, ['headers' => $headers]);
         if (is_wp_error($response)) {
             throw new \RuntimeException(
-                'Error fetching data from the API: ' . $response->get_error_message()
+                'Error fetching data from the API: ' . wp_kses_post($response->get_error_message())
             );
         }
 
@@ -88,7 +88,7 @@ class APIService implements APIServiceInterface
      * @param int $userId The ID of the user to fetch details for.
      * @return array The user's details as an associative array.
      */
-    public function UserDetails(int $userId): array
+    public function userDetails(int $userId): array
     {
         // Use the base URL or a default URL if not set.
         $baseUrl = $this->url ?? 'https://jsonplaceholder.typicode.com/users';

@@ -81,7 +81,7 @@ class APIController
             return;
         }
 
-        $userDetails = $this->apiService->UserDetails($userId);
+        $userDetails = $this->apiService->userDetails($userId);
 
         if (empty($userDetails)) {
             wp_send_json_error('User not found');
