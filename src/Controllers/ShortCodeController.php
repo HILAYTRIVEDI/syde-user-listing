@@ -154,6 +154,12 @@ class ShortcodeController
         if (empty($data) || !is_array($data)) {
             // Fetch fresh data from the API if cache is empty or not valid.
             $data = $this->serviceFactory->createApiService()->fetch($apiEndpoint);
+
+            if (is_wp_error($data)) {
+                // If there's an error fetching data from the API, display an error message.
+                return esc_html__('There was an issue retrieving data. Please try again later.', 'syde-user-listing');
+            }
+
             $this->cacheController->cacheDataWithExpiration('data_list', $data);
         }
 
