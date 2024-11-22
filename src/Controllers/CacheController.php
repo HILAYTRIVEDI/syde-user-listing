@@ -1,6 +1,5 @@
 <?php
 
-
 declare(strict_types=1);
 
 namespace Syde\UserListing\Controllers;
@@ -8,58 +7,62 @@ namespace Syde\UserListing\Controllers;
 use Syde\UserListing\Factories\ServiceFactory;
 
 /**
- * Cache controller class for caching the user data.
- * 
+ * Cache controller class for caching the data and storing it in the options table.
+ *
  * @since 1.0.0
- * 
+ *
  * @package Syde\UserListing\Controllers
  */
-class CacheController{
-
+class CacheController
+{
     /**
      * CacheController constructor.
-     * 
+     *
+     * @param ServiceFactory $serviceFactory The service factory for creating the cache service.
+     *
      * @since 1.0.0
-     * 
-     * @access public
-     * 
-     * @param ServiceFactory $serviceFactory
+     *
      * @return void
-     * 
      */
-    public function __construct(private ServiceFactory $serviceFactory){}
-
+    public function __construct(private ServiceFactory $serviceFactory)
+    {
+    }
 
     /**
      * Get the user cache.
-     * 
+     *
+     * Fetches cached user data from the cache service.
+     *
+     * @param string $cacheName The name of the cache (e.g., 'user_list').
+     * @param string $endpoint The API endpoint associated with the cache.
+     *
+     * @return array|bool The cached user data, or false if not found.
+     *
      * @since 1.0.0
-     * 
      * @access public
-     * 
-     * @param string $cache_name
-     * @param string $endpoint
-     * @return array | bool
-     * 
      */
-    public function getUserCache( string $cache_name, string $endpoint ): array | bool{
-        $cache = $this->serviceFactory->createCacheService()->getCache( $cache_name, $endpoint );
+    public function userCache(string $cacheName, string $endpoint): array|bool
+    {
+        // Fetch cache using the cache service
+        $cache = $this->serviceFactory->createCacheService()->returnCache($cacheName, $endpoint);
         return $cache;
     }
 
     /**
      * Set the user cache.
-     * 
-     * @since 1.0.0
-     * 
-     * @access public
-     * 
-     * @param string $cache_name
-     * @param array $user_info
+     *
+     * Sets the cached user data in the cache service.
+     *
+     * @param string $cacheName The name of the cache (e.g., 'user_list').
+     * @param array $userInfo The user data to be cached.
+     *
      * @return void
-     *  
+     *
+     * @since 1.0.0
      */
-    public function setUserCache( string $cache_name, array $user_info ): void{
-        $this->serviceFactory->createCacheService()->setCache( $cache_name, $user_info );
+    public function cacheDataWithExpiration(string $cacheName, array $userInfo): void
+    {
+        // Store user data in the cache
+        $this->serviceFactory->createCacheService()->cacheDataWithExpiration($cacheName, $userInfo);
     }
 }

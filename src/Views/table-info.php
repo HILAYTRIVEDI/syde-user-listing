@@ -1,3 +1,14 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * View for the user listing page.
+ *
+ * @package SydeUserListing
+ */
+
+?>
 <div class="table-responsive">
     <table class="syde-user-listing-table" aria-describedby="user-table-desc">
         <caption id="user-table-desc">
@@ -8,7 +19,7 @@
             // Prepare column headers dyamically from the response keys and only first 4 keys.
             $keys = array_slice(array_keys($users[0]), 0, 4);
             foreach ($keys as $key) {
-                echo '<th scope="col" data-label="' . esc_html($key) . '">' . esc_html(strtoupper($key)) . '</th>';
+                echo '<th scope="col" data-label="' . esc_attr($key) . '">' . esc_html(strtoupper($key)) . '</th>';
             }
 
             ?>
@@ -39,7 +50,7 @@
                         </a>
                     </td>
                 </tr>
-            <?php
+                <?php
             }
             ?>
         </tbody>
