@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Syde\UserListing\Controllers;
 
-use Syde\UserListing\Controllers\MenuPageController;
-
 /**
  * Class AdminController
  *
@@ -13,7 +11,7 @@ use Syde\UserListing\Controllers\MenuPageController;
  */
 class AdminController
 {
-    public function __construct(private MenuPageController $menuPageController)
+    public function __construct(private MenuPageController $menuPageController, private CacheController $cacheController)
     {
     }
 
@@ -30,6 +28,11 @@ class AdminController
         add_action('admin_init', [$this, 'registerAPIEndpointFields']);
     }
 
+    public function updateOptions(): void{
+        // clear cached user data
+        $this->cacheController->deleteCache('data_list');
+    }
+
     /**
      * Add the API endpoint menu.
      *
@@ -40,8 +43,8 @@ class AdminController
     public function addApiEndpointMenu(): void
     {
         add_menu_page(
-            'API Endpoint',
-            'API Endpoint',
+            'Default API Endpoint',
+            'DefaultAPI Endpoint',
             'manage_options',
             'api_endpoint',
             [$this, 'renderApiEndpointPage'],
@@ -85,6 +88,34 @@ class AdminController
         include_once SYDE_USER_LISTING_PLUGIN_DIR . 'src/Views/admin-page.php';
         $output = ob_get_clean();
 
-        echo wp_kses_post($output);
+        echo  wp_kses($output,[
+            'table' => [
+                'class' => [],
+            ],
+            'tr' => [
+                'class' => [],
+            ],
+            'th' => [
+                'scope' => [],
+                'class' => [],
+            ],
+            'td' => [
+                'class' => [],
+            ],
+            'input' => [
+                'type' => [],
+                'name' => [],
+                'value' => [],
+                'class' => [],
+            ],
+            'h1' => [
+                'class' => [],
+            ],
+            'form' => [
+                'method' => [],
+                'action' => [],
+                'class' => [],
+            ],
+        ]);
     }
 }

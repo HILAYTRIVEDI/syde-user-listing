@@ -20,5 +20,5 @@ interface APIServiceInterface
      * @param array $headers Optional headers to include in the request.
      * @return array The response data as an associative array.
      */
-    public function fetch(string $url, array $headers = []): array;
+    public function fetch(string $url, array $headers = []): array|\WP_Error;
 }

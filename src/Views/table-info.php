@@ -1,58 +1,61 @@
-<?php
-
-declare(strict_types=1);
-
-/**
- * View for the user listing page.
- *
- * @package SydeUserListing
- */
-
-?>
 <div class="table-responsive">
     <table class="syde-user-listing-table" aria-describedby="user-table-desc">
         <caption id="user-table-desc">
-            A list of users with their ID, username, and email address.
+            A list of data that comes from the API.
         </caption>
         <thead>
             <?php
-            // Prepare column headers dyamically from the response keys and only first 4 keys.
-            $keys = array_slice(array_keys($users[0]), 0, 4);
-            foreach ($keys as $key) {
-                echo '<th scope="col" data-label="' . esc_attr($key) . '">' . esc_html(strtoupper($key)) . '</th>';
-            }
-
+            $keys = array_slice(array_keys($data[0]), 0, 4);  // Get the first 4 keys.
+            // Prepare column headers dynamically from the response keys.
+            foreach ($keys as $key) { ?>
+                <th scope="col" data-label="<?php echo esc_attr(ucwords($key)); ?>"><?php echo esc_html(ucwords($key)); ?></th>
+            <?php
+            };
             ?>
         </thead>
         <tbody>
             <?php
-            // Prepare the rows from the response.
-            foreach ($users as $key => $user) { ?>
-                <tr class="user-row" data-user-id="<?php echo esc_attr($user['id']) ?>">
-                    <td class="user-<?php echo esc_attr($key) ?>" data-label="<?php echo esc_attr($key) ?>">
-                        <a href="#" class="user-link" data-user-id="<?php echo esc_attr($user['id']) ?>">
-                            <?php echo esc_attr($user['id']) ?>
-                        </a>
-                    </td>
-                    <td class="user-<?php esc_attr($key) ?>" data-label="<?php echo esc_attr($key) ?>">
-                        <a href="#" class="user-link" data-user-id="<?php echo esc_attr($user['id']) ?>">
-                            <?php echo esc_html($user['name']) ?>
-                        </a>
-                    </td>
-                    <td class="user-<?php esc_attr($key) ?>" data-label="<?php echo esc_attr($key) ?>">
-                        <a href="#" class="user-link" data-user-id="<?php echo esc_attr($user['id']) ?>">
-                            <?php echo esc_html($user['username']) ?>
-                        </a>
-                    </td>
-                    <td class="user-<?php esc_attr($key) ?>" data-label="<?php echo esc_attr($key) ?>">
-                        <a href="#" class="user-link" data-user-id="<?php echo esc_attr($user['id']) ?>">
-                            <?php echo esc_html($user['email']) ?>
-                        </a>
-                    </td>
-                </tr>
-                <?php
+            // Ensure data is an array before proceeding.
+            if (is_array($data) && !empty($data)) {
+                foreach ($data as $singleData) {
+                    // Validate that $singleData is an array.
+                    if (is_array($singleData)) {
+                        // Use the first key for the data-id of the anchor tag.
+                        $firstKey = $keys[0]; // Get the first key from the keys list.
+            ?>
+                        <tr class="user-row">
+                            <?php
+                            // Loop over the first 4 keys only.
+                            foreach ($keys as $key) {
+                                if (isset($singleData[$key]) && !is_array($singleData[$key])) {
+                            ?>
+                                    <td class="user-<?php echo esc_attr($key); ?>" data-label="<?php echo esc_attr(ucwords($key)); ?>">
+                                        <a href="#" class="user-link" data-id="<?php echo esc_attr($singleData[$firstKey]); ?>">
+                                            <?php echo esc_html($singleData[$key]); ?>
+                                        </a>
+                                    </td>
+                                    <?php
+                                }
+                                // Handle case where $value is an array and needs to be displayed recursively.
+                                elseif (is_array($singleData[$key])) {
+                                    array_walk_recursive($singleData[$key], static function ($value, $key) use ($singleData, $firstKey) { ?>
+                                        <td class="user-<?php echo esc_attr($key); ?>" data-label="<?php echo esc_attr(ucwords($key)); ?>">
+                                            <a href="#" class="user-link" data-id="<?php echo esc_attr($singleData[$firstKey]); ?>">
+                                                <?php echo esc_html($value); ?>
+                                            </a>
+                                        </td>
+                            <?php
+                                    });
+                                }
+                            }
+                            ?>
+                        </tr>
+            <?php
+                    }
+                }
             }
             ?>
+
         </tbody>
     </table>
 

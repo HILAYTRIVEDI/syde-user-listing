@@ -1,5 +1,5 @@
 (function ($) {
-    let userID = 0;
+    let tempDataId = 0;
 
     // Cache user data to minimize redundant AJAX calls
     const cachedUserData = {};
@@ -10,34 +10,33 @@
             link.addEventListener('click', function (e) {
                 e.preventDefault();
 
-                const userId = e.target.dataset.userId;
+                const dataId = e.target.dataset.id;
 
                 // Short circuit if the user ID is unchanged
-                if (userId === userID) {
+                if (tempDataId === dataId) {
                     return;
                 }
-                userID = userId;
 
                 // Check if user data is already cached
-                if (cachedUserData[userId]) {
-                    displayUserData(cachedUserData[userId]);
+                if (cachedUserData[dataId]) {
+                    displayUserData(cachedUserData[dataId]);
                     return;
                 }
 
                 // Perform AJAX call for new user data
-                fetchUserData(userId);
+                fetchUserData(dataId);
             });
         }
     );
 
-    function fetchUserData(userId)
+    function fetchUserData(dataId)
     {
         $.ajax({
             url: syde_user_listing.ajax_url,
             type: 'POST',
             data: {
                 action: 'fetch_user_details',
-                user_id: userId,
+                user_id: dataId,
                 _wpnonce: syde_user_listing.nonce,
             },
             beforeSend: () =>
@@ -47,15 +46,15 @@
             success: (response) =>
             {
                 if (response.success) {
-                    cachedUserData[userId] = response.data; // Cache the data
+                    cachedUserData[dataId] = response.data; // Cache the data
                     displayUserData(response.data);
                 } else {
-                    console.error(response.data);
+                    displayUserData(response.data)
                 }
             },
             error: (error) =>
             {
-                console.error(error.responseJSON);
+                displayUserData(error.responseJSON)
             },
         });
     }
