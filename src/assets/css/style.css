@@ -1,9 +1,9 @@
 .table-responsive {
     overflow-x: auto;
+    max-width: var(--wp--style--global--wide-size);
 }
 
 .syde-user-listing-table {
-    max-width: 1024px;
     width: 100%;
 }
 

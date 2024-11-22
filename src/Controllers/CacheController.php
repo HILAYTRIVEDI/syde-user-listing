@@ -15,6 +15,16 @@ use Syde\UserListing\Factories\ServiceFactory;
  */
 class CacheController
 {
+
+    /**
+     * The cache key for the user data.
+     * 
+     * @var string
+     * @since 1.0.0
+     * @access private
+     */
+    private string $cacheKey;
+
     /**
      * CacheController constructor.
      *
@@ -43,11 +53,11 @@ class CacheController
      */
     public function userCache(string $cacheName, string $endpoint): array|bool
     {
-
-        $cahceKey = $cacheName . '_' . $endpoint;
+        // Create a cache key using the cache name and endpoint.
+        $this->cacheKey = $cacheName . '_' . $endpoint;
 
         // Fetch cache using the cache service
-        $cache = $this->serviceFactory->createCacheService()->returnCache($cahceKey);
+        $cache = $this->serviceFactory->createCacheService()->returnCache($this->cacheKey);
         return $cache;
     }
 
@@ -63,11 +73,11 @@ class CacheController
      *
      * @since 1.0.0
      */
-    public function cacheDataWithExpiration(string $cacheName, array $userInfo): void
+    public function cacheDataWithExpiration( array $userInfo): void
     {
         // Store user data in the cache
         try{
-            $this->serviceFactory->createCacheService()->cacheDataWithExpiration($cacheName, $userInfo);
+            $this->serviceFactory->createCacheService()->cacheDataWithExpiration($this->cacheKey, $userInfo);
         } catch (\Exception $e) {
             // Handle any exceptions that may occur during cache storage.
             new \WP_Error('cache_storage_failed', 'An error occurred while storing the cache.');
