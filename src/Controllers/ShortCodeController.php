@@ -112,6 +112,11 @@ class ShortcodeController
      */
     public function renderShortCode(array $atts, ?string $content = null): string
     {
+
+        if(is_admin()) {
+            return '';
+        }
+
         // Check if the shortcode has been disabled.
         if (defined('SHORTCODE_DISABLED')) {
             return esc_html__('Shortcode is disabled.', 'syde-user-listing');
@@ -133,6 +138,8 @@ class ShortcodeController
             $apiEndpointUrl = get_option('api_endpoint_url');
 
             $apiEndpoint = $apiEndpointUrl . $apiEndpointName;
+        } else {
+            $apiEndpoint = $atts['endpoint'];
         }
 
         /**
@@ -142,12 +149,12 @@ class ShortcodeController
         do_action('syde_user_listing_before_fetch', $atts);
 
         // Attempt to fetch cached user data for the given endpoint.
-        $users = $this->cacheController->userCache('user_list', $apiEndpoint);
+        $data = $this->cacheController->userCache('data_list', $apiEndpoint);
 
-        if (empty($users) || !is_array($users)) {
+        if (empty($data) || !is_array($data)) {
             // Fetch fresh data from the API if cache is empty or not valid.
-            $users = $this->serviceFactory->createApiService()->fetch($apiEndpoint);
-            $this->cacheController->cacheDataWithExpiration('user_list', $users);
+            $data = $this->serviceFactory->createApiService()->fetch($apiEndpoint);
+            $this->cacheController->cacheDataWithExpiration('data_list', $data);
         }
 
         /**
@@ -155,7 +162,7 @@ class ShortcodeController
          * Allows other plugins or parts of the system to modify the users
          * list before it is displayed.
          */
-        $users = apply_filters('syde_user_listing_users', $users, $atts);
+        $data = apply_filters('syde_user_listing_users', $data, $atts);
 
         // Capture the output of the table info template.
         ob_start();

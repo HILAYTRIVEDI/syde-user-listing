@@ -43,8 +43,11 @@ class CacheController
      */
     public function userCache(string $cacheName, string $endpoint): array|bool
     {
+
+        $cahceKey = $cacheName . '_' . $endpoint;
+
         // Fetch cache using the cache service
-        $cache = $this->serviceFactory->createCacheService()->returnCache($cacheName, $endpoint);
+        $cache = $this->serviceFactory->createCacheService()->returnCache($cahceKey);
         return $cache;
     }
 
@@ -64,5 +67,24 @@ class CacheController
     {
         // Store user data in the cache
         $this->serviceFactory->createCacheService()->cacheDataWithExpiration($cacheName, $userInfo);
+    }
+
+    /**
+     * Delete the cache.
+     *
+     * Deletes the cache with the given name.
+     *
+     * @since 1.0.0
+     *
+     * @access public
+     *
+     * @param string $cacheName The name of the cache to delete.
+     *
+     * @return void
+     * 
+     */
+    public function deleteCache(string $cacheName): void
+    {
+        $this->serviceFactory->createCacheService()->deleteCache($cacheName);
     }
 }
