@@ -17,23 +17,17 @@ class APIService implements APIServiceInterface
 {
     /**
      * The base URL for API requests.
-     *
      */
     private string $url;
 
     /**
      * Fetch data from an API endpoint.
      *
-     * This method sends a GET request to the specified URL with optional headers,
-     * and returns the decoded JSON response as an associative array.
-     *
      * @param string $url The API endpoint to fetch data from.
      * @param array $headers Optional headers to include in the request.
-     * @return array The response data as an associative array.
-     *
-     * @throws \InvalidArgumentException If the URL is invalid or not accessible.
+     * @return array|WP_Error The response data as an associative array or a WP_Error object.
      */
-    public function fetch(string $url, array $headers = []): array
+    public function fetch(string $url, array $headers = []): array|\WP_Error
     {
         // Sanitize the URL.
         $this->url = sanitize_url($url);
@@ -41,13 +35,13 @@ class APIService implements APIServiceInterface
         // Validate the URL format.
         if (!filter_var($this->url, FILTER_VALIDATE_URL)) {
             do_action('syde_user_listing_api_service_invalid_url', $url);
-            throw new \InvalidArgumentException('Invalid URL provided.');
+            return new \WP_Error('invalid_url', 'Invalid URL provided.');
         }
 
         // Validate the URL's accessibility.
         $headResponse = wp_remote_head($this->url);
         if (is_wp_error($headResponse) || wp_remote_retrieve_response_code($headResponse) !== 200) {
-            throw new \InvalidArgumentException('URL is not accessible.');
+            return new \WP_Error('url_not_accessible', 'The URL is not accessible or does not exist.');
         }
 
         // Allow modifications to the URL and headers via filters.
@@ -57,7 +51,8 @@ class APIService implements APIServiceInterface
         // Send the GET request and retrieve the response body.
         $response = wp_safe_remote_get($this->url, ['headers' => $headers]);
         if (is_wp_error($response)) {
-            throw new \RuntimeException(
+            return new \WP_Error(
+                'api_request_failed',
                 'Error fetching data from the API: ' . wp_kses_post($response->get_error_message())
             );
         }
@@ -67,7 +62,7 @@ class APIService implements APIServiceInterface
 
         // Ensure the response is a valid JSON object.
         if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new \RuntimeException('Invalid JSON response from the API.');
+            return new \WP_Error('invalid_json', 'Invalid JSON response from the API.');
         }
 
         // Allow modifications to the decoded response via a filter.
@@ -83,12 +78,10 @@ class APIService implements APIServiceInterface
     /**
      * Retrieve user details by user ID.
      *
-     * Fetches user details from the API for the given user ID, using the base URL or a default URL.
-     *
      * @param int $userId The ID of the user to fetch details for.
-     * @return array The user's details as an associative array.
+     * @return array|WP_Error The user's details as an associative array or WP_Error object.
      */
-    public function userDetails(int $userId): array
+    public function userDetails(int $userId): array | \WP_Error
     {
         // Use the base URL or a default URL if not set.
         $baseUrl = $this->url ?? 'https://jsonplaceholder.typicode.com/users';
