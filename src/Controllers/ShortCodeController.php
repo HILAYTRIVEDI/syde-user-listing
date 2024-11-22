@@ -114,11 +114,6 @@ class ShortcodeController
      */
     public function renderShortCode(array $atts, ?string $content = null): string | \WP_Error
     {
-
-        if(is_admin()) {
-            return '';
-        }
-
         // Check if the shortcode has been disabled.
         if (defined('SHORTCODE_DISABLED')) {
             return esc_html__('Shortcode is disabled.', 'syde-user-listing');
@@ -128,7 +123,7 @@ class ShortcodeController
         // Merge shortcode attributes with defaults.
         $atts = shortcode_atts(
             [
-                'endpoint' => ''
+                'endpoint' => 'https://jsonplaceholder.typicode.com/users'
             ],
             $atts,
             'syde_user_listing'
@@ -141,7 +136,7 @@ class ShortcodeController
 
             $apiEndpoint = $apiEndpointUrl . $apiEndpointName;
         } else {
-            $apiEndpoint = $atts['endpoint'];
+            $apiEndpoint = 'https://jsonplaceholder.typicode.com/'.$atts['endpoint'];
         }
 
         /**
@@ -151,9 +146,10 @@ class ShortcodeController
         do_action('syde_user_listing_before_fetch', $atts);
 
         // Attempt to fetch cached user data for the given endpoint.
-        $data = $this->cacheController->userCache('data_list', $apiEndpoint);
+        $data = $this->cacheController->userCache('data_list', $atts['endpoint']);
 
-        if (empty($data) || !is_array($data)) {
+
+        if (empty($data)) {
             // Fetch fresh data from the API if cache is empty or not valid.
             $data = $this->serviceFactory->createApiService()->fetch($apiEndpoint);
             if (is_wp_error($data)) {
@@ -164,7 +160,7 @@ class ShortcodeController
                 );
             }
 
-            $this->cacheController->cacheDataWithExpiration('data_list', $data);
+            $this->cacheController->cacheDataWithExpiration($data);
         }
 
         /**
