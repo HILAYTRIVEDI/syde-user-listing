@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Syde\UserListing\Controllers;
 
-use Syde\UserListing\Controllers\APIController;
 use Syde\UserListing\Factories\ServiceFactory;
-use Syde\UserListing\Controllers\CacheController;
 
 /**
  * Class ShortcodeController

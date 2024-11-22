@@ -13,6 +13,8 @@
  * @package SydeUserListing
  */
 
+namespace Syde\UserListing;
+
 // Exit if accessed directly.
 if (! defined('ABSPATH')) {
 	exit;
@@ -66,12 +68,5 @@ if (! autoload()) {
 	return;
 }
 
-// Initialize the plugin with the container.
-use Syde\UserListing\Plugin;
-use Syde\UserListing\Container\Container;
-
-// Initialize the plugin and pass the container.
-$plugin = new Plugin(new Container());
-
-// Initialize plugin functionality.
-$plugin->init();
+// Check if the SydeUserListing class exists.
+class_exists(SydeUserListing::class) && SydeUserListing::bootstrap();

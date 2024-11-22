@@ -20,7 +20,7 @@ use ReflectionParameter;
  *
  * @package Syde\UserListing\Container
  */
-class Container implements ContainerInterface
+class SydeContainer implements ContainerInterface
 {
     /**
      * The bindings of the container.
