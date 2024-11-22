@@ -25,7 +25,7 @@ use Syde\UserListing\Controllers\ShortcodeController;
  * @package Syde\UserListing
  * @since 1.0.0
  */
-class Plugin
+final class Plugin
 {
     /**
      * The container instance for dependency injection.
