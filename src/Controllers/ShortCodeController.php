@@ -117,19 +117,23 @@ class ShortcodeController
             return esc_html__('Shortcode is disabled.', 'syde-user-listing');
         }
 
-        // Get the API endpoint from the plugin options, or use defaults.
-        $apiEndpointName = get_option('api_endpoint_name')
-        ?? 'https://jsonplaceholder.typicode.com';
-        $apiEndpointUrl = get_option('api_endpoint_url') ?? '/users';
 
         // Merge shortcode attributes with defaults.
         $atts = shortcode_atts(
             [
-                'endpoint' => $apiEndpointUrl . $apiEndpointName,
+                'endpoint' => ''
             ],
             $atts,
             'syde_user_listing'
         );
+
+        if (empty($atts['endpoint'])) {
+            // Get the API endpoint from the plugin options, or use defaults.
+            $apiEndpointName = get_option('api_endpoint_name');
+            $apiEndpointUrl = get_option('api_endpoint_url');
+
+            $apiEndpoint = $apiEndpointUrl . $apiEndpointName;
+        }
 
         /**
          * Action hook before fetching user data.
@@ -138,11 +142,11 @@ class ShortcodeController
         do_action('syde_user_listing_before_fetch', $atts);
 
         // Attempt to fetch cached user data for the given endpoint.
-        $users = $this->cacheController->userCache('user_list', $atts['endpoint']);
+        $users = $this->cacheController->userCache('user_list', $apiEndpoint);
 
         if (empty($users) || !is_array($users)) {
             // Fetch fresh data from the API if cache is empty or not valid.
-            $users = $this->serviceFactory->createApiService()->fetch($atts['endpoint']);
+            $users = $this->serviceFactory->createApiService()->fetch($apiEndpoint);
             $this->cacheController->cacheDataWithExpiration('user_list', $users);
         }
 

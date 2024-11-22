@@ -85,6 +85,34 @@ class AdminController
         include_once SYDE_USER_LISTING_PLUGIN_DIR . 'src/Views/admin-page.php';
         $output = ob_get_clean();
 
-        echo wp_kses_post($output);
+        echo  wp_kses($output,[
+            'table' => [
+                'class' => [],
+            ],
+            'tr' => [
+                'class' => [],
+            ],
+            'th' => [
+                'scope' => [],
+                'class' => [],
+            ],
+            'td' => [
+                'class' => [],
+            ],
+            'input' => [
+                'type' => [],
+                'name' => [],
+                'value' => [],
+                'class' => [],
+            ],
+            'h1' => [
+                'class' => [],
+            ],
+            'form' => [
+                'method' => [],
+                'action' => [],
+                'class' => [],
+            ],
+        ]);
     }
 }
