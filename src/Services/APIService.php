@@ -81,7 +81,7 @@ class APIService implements APIServiceInterface
      * @param int $userId The ID of the user to fetch details for.
      * @return array|WP_Error The user's details as an associative array or WP_Error object.
      */
-    public function userDetails(int $userId): array|\WP_Error
+    public function userDetails(int $userId): array | \WP_Error
     {
         // Use the base URL or a default URL if not set.
         $baseUrl = $this->url ?? 'https://jsonplaceholder.typicode.com/users';
