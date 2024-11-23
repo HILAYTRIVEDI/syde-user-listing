@@ -33,6 +33,7 @@
         }
     },
     "require-dev": {
-        "inpsyde/php-coding-standards": "^2@dev"
+        "inpsyde/php-coding-standards": "^2@dev",
+        "brain/monkey": "^2.6"
     }
 }
