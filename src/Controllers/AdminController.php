@@ -28,7 +28,8 @@ class AdminController
         add_action('admin_init', [$this, 'registerAPIEndpointFields']);
     }
 
-    public function updateOptions(): void{
+    public function updateOptions(): void
+    {
         // clear cached user data
         $this->cacheController->deleteCache('data_list');
     }
@@ -72,12 +73,6 @@ class AdminController
             'sanitize_text_field'
         );
 
-        $this->menuPageController->registerMenuPageField(
-            'api_endpoint_settings',
-            'api_endpoint_name',
-            'sanitize_text_field'
-        );
-
         // Add hooks for extensibility
         do_action('register_api_endpoint_fields');
     }
@@ -88,7 +83,7 @@ class AdminController
         include_once SYDE_USER_LISTING_PLUGIN_DIR . 'src/Views/admin-page.php';
         $output = ob_get_clean();
 
-        echo  wp_kses($output,[
+        echo wp_kses($output, [
             'table' => [
                 'class' => [],
             ],

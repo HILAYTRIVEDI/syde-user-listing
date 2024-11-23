@@ -67,6 +67,7 @@ class AjaxController
             ? wp_unslash($_POST['_wpnonce'])
             : ''
         );
+
         if (!wp_verify_nonce($nonce, 'syde_user_listing')) {
             wp_send_json_error('Invalid nonce');
             return;
@@ -74,14 +75,15 @@ class AjaxController
 
 
         // Get and validate the user ID from POST
-        $userId = isset($_POST['user_id']) ? absint($_POST['user_id']) : 0;
+        $userId = isset($_POST['userId']) ? absint($_POST['userId']) : 0;
+        $apiEndpoint = isset($_POST['_apiEndpoint']) ? sanitize_text_field($_POST['_apiEndpoint']) : '';
 
         if (!$userId) {
-            wp_send_json_error('Invalid user_id');
+            wp_send_json_error('Invalid userId');
             return;
         }
 
-        $userDetails = $this->apiService->userDetails($userId);
+        $userDetails = $this->apiService->userDetails($apiEndpoint, $userId);
 
         if (empty($userDetails)) {
             wp_send_json_error('User not found');
@@ -92,6 +94,7 @@ class AjaxController
         ob_start();
         require_once SYDE_USER_LISTING_PLUGIN_DIR . 'src/Views/single-user.php';
         $userDetailsHtml = ob_get_clean();
+
 
         // Return the success response with HTML content
         wp_send_json_success($userDetailsHtml);

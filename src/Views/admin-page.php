@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * View for the admin page.
  *
@@ -18,12 +21,6 @@
                 <th scope="row"><?php esc_html_e('Default API Endpoint URL', 'syde-user-listing'); ?></th>
                 <td>
                     <input type="url" name="api_endpoint_url" value="<?php echo esc_attr(get_option('api_endpoint_url')); ?>" class="regular-text">
-                </td>
-            </tr>
-            <tr valign="top">
-                <th scope="row"><?php esc_html_e('Default API Endpoint Name', 'syde-user-listing'); ?></th>
-                <td>
-                    <input type="text" name="api_endpoint_name" value="<?php echo esc_attr(get_option('api_endpoint_name')); ?>" class="regular-text">
                 </td>
             </tr>
             <?php
