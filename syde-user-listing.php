@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Plugin Name: Syde User Listing
  * Plugin URI: https://github.com/HILAYTRIVEDI/syde-user-listing

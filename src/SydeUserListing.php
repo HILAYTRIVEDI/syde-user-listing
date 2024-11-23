@@ -53,19 +53,8 @@ final class SydeUserListing
      */
     public function registerServices(): void
     {
-        $adminController = $this->container->get(AdminController::class);
-        if (!$adminController) {
-            throw new \RuntimeException(
-                'AdminController could not be retrieved from the container.'
-            );
-        }
-        $adminController->register();
+        $this->container->get(AdminController::class)?->register();
 
-        $shortcodeController = $this->container->get(ShortcodeController::class);
-        if (!$shortcodeController) {
-            throw new \RuntimeException(
-                'ShortcodeController could not be retrieved from the container.'
-            );
-        }
+        $this->container->get(ShortcodeController::class);
     }
 }
