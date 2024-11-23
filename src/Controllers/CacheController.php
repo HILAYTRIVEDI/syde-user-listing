@@ -49,10 +49,10 @@ class CacheController
      * @since 1.0.0
      * @access public
      */
-    public function userCache(string $cacheName, string $endpoint): array|bool
+    public function userCache(string $cacheName): array|bool
     {
         // Create a cache key using the cache name and endpoint.
-        $this->cacheKey = $cacheName . '_' . $endpoint;
+        $this->cacheKey = $cacheName;
 
         // Fetch cache using the cache service
         $cache = $this->serviceFactory->createCacheService()->returnCache($this->cacheKey);

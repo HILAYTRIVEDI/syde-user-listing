@@ -1,3 +1,17 @@
+<?php
+
+declare(strict_types=1); 
+
+/**
+ * View for displaying user data in a table format.
+ * 
+ * @package Syde\UserListing\Views
+ * 
+ * @since 1.0.0
+ */
+
+?>
+
 <div class="table-responsive">
     <table class="syde-user-listing-table" aria-describedby="user-table-desc">
         <caption id="user-table-desc">
@@ -5,8 +19,6 @@
         </caption>
         <thead>
             <?php
-
-            declare(strict_types=1);
 
             $keys = array_slice(array_keys($data[0]), 0, 4); // Get the first 4 keys.
             // Prepare column headers dynamically from the response keys.

@@ -131,12 +131,9 @@ class ShortcodeController
 
         if (empty($atts['endpoint'])) {
             // Get the API endpoint from the plugin options, or use defaults.
-            $apiEndpointName = get_option('api_endpoint_name');
-            $apiEndpointUrl = get_option('api_endpoint_url');
-
-            $apiEndpoint = $apiEndpointUrl . $apiEndpointName;
+            $apiEndpoint = get_option('api_endpoint_url');
         } else {
-            $apiEndpoint = 'https://jsonplaceholder.typicode.com/' . $atts['endpoint'];
+            $apiEndpoint = $atts['endpoint'];
         }
 
         /**
@@ -145,9 +142,12 @@ class ShortcodeController
          */
         do_action('syde_user_listing_before_fetch', $atts);
 
-        // Attempt to fetch cached user data for the given endpoint.
-        $data = $this->cacheController->userCache('data_list', $atts['endpoint']);
 
+        // Create a unique cache key for the given endpoint.
+        $cacheKey = 'data_list_' . md5($apiEndpoint);
+
+        // Attempt to fetch cached user data for the given endpoint.
+        $data = $this->cacheController->userCache($cacheKey);
 
         if (empty($data)) {
             // Fetch fresh data from the API if cache is empty or not valid.

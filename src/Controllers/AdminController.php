@@ -72,13 +72,7 @@ class AdminController
             'api_endpoint_url',
             'sanitize_text_field'
         );
-
-        $this->menuPageController->registerMenuPageField(
-            'api_endpoint_settings',
-            'api_endpoint_name',
-            'sanitize_text_field'
-        );
-
+        
         // Add hooks for extensibility
         do_action('register_api_endpoint_fields');
     }
