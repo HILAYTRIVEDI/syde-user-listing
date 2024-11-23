@@ -72,7 +72,7 @@ class AdminController
             'api_endpoint_url',
             'sanitize_text_field'
         );
-        
+
         // Add hooks for extensibility
         do_action('register_api_endpoint_fields');
     }

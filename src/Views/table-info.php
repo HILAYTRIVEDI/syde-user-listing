@@ -1,12 +1,12 @@
 <?php
 
-declare(strict_types=1); 
+declare(strict_types=1);
 
 /**
  * View for displaying user data in a table format.
- * 
+ *
  * @package Syde\UserListing\Views
- * 
+ *
  * @since 1.0.0
  */
 
