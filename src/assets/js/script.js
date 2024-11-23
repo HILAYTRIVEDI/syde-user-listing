@@ -1,10 +1,6 @@
 (function ($) {
     let tempDataId = 0;
 
-    // Cache user data to minimize redundant AJAX calls
-    const cachedUserData = {};
-
-
     const apiEndpoint = document.querySelector('#user-additional-data').dataset.apiUrl;
 
     document.querySelectorAll('.user-link').forEach(
@@ -14,17 +10,13 @@
                 e.preventDefault();
 
                 const dataId = e.target.dataset.id;
-
+                
                 // Short circuit if the user ID is unchanged
                 if (tempDataId === dataId) {
                     return;
                 }
 
-                // Check if user data is already cached
-                if (cachedUserData[dataId]) {
-                    displayUserData(cachedUserData[dataId]);
-                    return;
-                }
+                tempDataId = dataId;
 
                 // Perform AJAX call for new user data
                 fetchUserData(dataId);
@@ -48,12 +40,9 @@
                 displayLoadingMessage();
             },
             success: (response) =>
-            {
+            {   
                 if (response.success) {
-                    cachedUserData[dataId] = response.data; // Cache the data
                     displayUserData(response.data);
-                } else {
-                    displayUserData(response.data)
                 }
             },
             error: (error) =>

@@ -67,6 +67,7 @@ class AjaxController
             ? wp_unslash($_POST['_wpnonce'])
             : ''
         );
+
         if (!wp_verify_nonce($nonce, 'syde_user_listing')) {
             wp_send_json_error('Invalid nonce');
             return;
@@ -93,6 +94,7 @@ class AjaxController
         ob_start();
         require_once SYDE_USER_LISTING_PLUGIN_DIR . 'src/Views/single-user.php';
         $userDetailsHtml = ob_get_clean();
+
 
         // Return the success response with HTML content
         wp_send_json_success($userDetailsHtml);
