@@ -123,7 +123,7 @@ class ShortcodeController
         // Merge shortcode attributes with defaults.
         $atts = shortcode_atts(
             [
-                'endpoint' => 'https://jsonplaceholder.typicode.com/users'
+                'endpoint' => ''
             ],
             $atts,
             'syde_user_listing'
