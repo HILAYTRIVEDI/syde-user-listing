@@ -15,11 +15,9 @@ use Syde\UserListing\Factories\ServiceFactory;
  */
 class CacheController
 {
-
     /**
      * The cache key for the user data.
-     * 
-     * @var string
+     *
      * @since 1.0.0
      * @access private
      */
@@ -73,10 +71,10 @@ class CacheController
      *
      * @since 1.0.0
      */
-    public function cacheDataWithExpiration( array $userInfo): void
+    public function cacheDataWithExpiration(array $userInfo): void
     {
         // Store user data in the cache
-        try{
+        try {
             $this->serviceFactory->createCacheService()->cacheDataWithExpiration($this->cacheKey, $userInfo);
         } catch (\Exception $e) {
             // Handle any exceptions that may occur during cache storage.
@@ -97,11 +95,11 @@ class CacheController
      * @param string $cacheName The name of the cache to delete.
      *
      * @return void
-     * 
+     *
      */
     public function deleteCache(string $cacheName): void
     {
-        try{
+        try {
             $this->serviceFactory->createCacheService()->deleteCache($cacheName);
         } catch (\Exception $e) {
             // Handle any exceptions that may occur during cache deletion.
