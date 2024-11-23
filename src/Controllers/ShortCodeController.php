@@ -119,7 +119,6 @@ class ShortcodeController
             return esc_html__('Shortcode is disabled.', 'syde-user-listing');
         }
 
-
         // Merge shortcode attributes with defaults.
         $atts = shortcode_atts(
             [
@@ -129,12 +128,10 @@ class ShortcodeController
             'syde_user_listing'
         );
 
-        if (empty($atts['endpoint'])) {
-            // Get the API endpoint from the plugin options, or use defaults.
-            $apiEndpoint = get_option('api_endpoint_url');
-        } else {
-            $apiEndpoint = $atts['endpoint'];
-        }
+        // Determine the API endpoint.
+        $apiEndpoint = empty($atts['endpoint'])
+            ? get_option('api_endpoint_url')
+            : $atts['endpoint'];
 
         /**
          * Action hook before fetching user data.
@@ -142,8 +139,7 @@ class ShortcodeController
          */
         do_action('syde_user_listing_before_fetch', $atts);
 
-
-        // Create a unique cache key for the given endpoint.
+        // Generate a unique cache key based on the endpoint.
         $cacheKey = 'data_list_' . md5($apiEndpoint);
 
         // Attempt to fetch cached user data for the given endpoint.
@@ -152,6 +148,7 @@ class ShortcodeController
         if (empty($data)) {
             // Fetch fresh data from the API if cache is empty or not valid.
             $data = $this->serviceFactory->createApiService()->fetch($apiEndpoint);
+
             if (is_wp_error($data)) {
                 // If there's an error fetching data from the API, display an error message.
                 return esc_html(
@@ -160,7 +157,7 @@ class ShortcodeController
                 );
             }
 
-            $this->cacheController->cacheDataWithExpiration($data);
+            $this->cacheController->cacheDataWithExpiration($cacheKey, $data);
         }
 
         /**
@@ -179,4 +176,5 @@ class ShortcodeController
 
         return wp_kses_post($output);
     }
+
 }

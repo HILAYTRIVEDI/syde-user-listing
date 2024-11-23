@@ -74,5 +74,5 @@ declare(strict_types=1);
         </tbody>
     </table>
 
-    <div id="user-additional-data"></div>
+    <div id="user-additional-data" data-api-url="<?php echo esc_attr($apiEndpoint); ?>"></div>
 </div>

@@ -51,11 +51,9 @@ class CacheController
      */
     public function userCache(string $cacheName): array|bool
     {
-        // Create a cache key using the cache name and endpoint.
-        $this->cacheKey = $cacheName;
 
         // Fetch cache using the cache service
-        $cache = $this->serviceFactory->createCacheService()->returnCache($this->cacheKey);
+        $cache = $this->serviceFactory->createCacheService()->returnCache($cacheName);
         return $cache;
     }
 
@@ -71,11 +69,11 @@ class CacheController
      *
      * @since 1.0.0
      */
-    public function cacheDataWithExpiration(array $userInfo): void
+    public function cacheDataWithExpiration( string $cacheName, array $userInfo): void
     {
         // Store user data in the cache
         try {
-            $this->serviceFactory->createCacheService()->cacheDataWithExpiration($this->cacheKey, $userInfo);
+            $this->serviceFactory->createCacheService()->cacheDataWithExpiration($cacheName, $userInfo);
         } catch (\Exception $e) {
             // Handle any exceptions that may occur during cache storage.
             new \WP_Error('cache_storage_failed', 'An error occurred while storing the cache.');
@@ -101,9 +99,9 @@ class CacheController
     {
         try {
             $this->serviceFactory->createCacheService()->deleteCache($cacheName);
-        } catch (\Exception $e) {
+        } catch (\Exception $error) {
             // Handle any exceptions that may occur during cache deletion.
-            new \WP_Error('cache_deletion_failed', 'An error occurred while deleting the cache.');
+            new \WP_Error('cache_deletion_failed', 'An error occurred while deleting the cache.', $error);
             return;
         }
     }

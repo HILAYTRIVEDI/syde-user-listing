@@ -4,6 +4,9 @@
     // Cache user data to minimize redundant AJAX calls
     const cachedUserData = {};
 
+
+    const apiEndpoint = document.querySelector('#user-additional-data').dataset.apiUrl;
+
     document.querySelectorAll('.user-link').forEach(
         link =>
         {
@@ -36,7 +39,8 @@
             type: 'POST',
             data: {
                 action: 'fetch_user_details',
-                user_id: dataId,
+                userId: dataId,
+                _apiEndpoint: apiEndpoint,
                 _wpnonce: syde_user_listing.nonce,
             },
             beforeSend: () =>

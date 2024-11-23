@@ -74,14 +74,15 @@ class AjaxController
 
 
         // Get and validate the user ID from POST
-        $userId = isset($_POST['user_id']) ? absint($_POST['user_id']) : 0;
+        $userId = isset($_POST['userId']) ? absint($_POST['userId']) : 0;
+        $apiEndpoint = isset($_POST['_apiEndpoint']) ? sanitize_text_field($_POST['_apiEndpoint']) : '';
 
         if (!$userId) {
-            wp_send_json_error('Invalid user_id');
+            wp_send_json_error('Invalid userId');
             return;
         }
 
-        $userDetails = $this->apiService->userDetails($userId);
+        $userDetails = $this->apiService->userDetails($apiEndpoint, $userId);
 
         if (empty($userDetails)) {
             wp_send_json_error('User not found');
