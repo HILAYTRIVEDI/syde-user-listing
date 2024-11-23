@@ -8,17 +8,17 @@ use Syde\UserListing\Services\APIService;
 use Syde\UserListing\Controllers\CacheController;
 
 /**
- * Class APIController
+ * Class AjaxController
  *
  * Handles AJAX requests for fetching user details from an external API.
  *
  * @package Syde\UserListing\Controllers
  * @since 1.0.0
  */
-class APIController
+class AjaxController
 {
     /**
-     * APIController constructor.
+     * AjaxController constructor.
      *
      * Initializes the controller by registering necessary actions.
      *

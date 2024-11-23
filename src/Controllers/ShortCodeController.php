@@ -22,14 +22,14 @@ class ShortcodeController
     /**
      * Constructor to initialize the dependencies and hook actions.
      *
-     * @param APIController $apiController The controller to interact with the external API.
+     * @param AjaxController $AjaxController The controller to interact with the external API.
      * @param ServiceFactory $serviceFactory The factory that creates services like API service.
      * @param CacheController $cacheController The controller that manages caching of user data.
      *
      * @since 1.0.0
      */
     public function __construct(
-        private APIController $apiController,
+        private AjaxController $AjaxController,
         private ServiceFactory $serviceFactory,
         private CacheController $cacheController
     ) {
