@@ -28,11 +28,6 @@ class AdminController
         add_action('admin_init', [$this, 'registerAPIEndpointFields']);
     }
 
-    public function updateOptions(): void
-    {
-        // clear cached user data
-        $this->cacheController->deleteCache('data_list');
-    }
 
     /**
      * Add the API endpoint menu.
