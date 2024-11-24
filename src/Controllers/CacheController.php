@@ -16,14 +16,6 @@ use Syde\UserListing\Factories\ServiceFactory;
 class CacheController
 {
     /**
-     * The cache key for the user data.
-     *
-     * @since 1.0.0
-     * @access private
-     */
-    private string $cacheKey;
-
-    /**
      * CacheController constructor.
      *
      * @param ServiceFactory $serviceFactory The service factory for creating the cache service.
