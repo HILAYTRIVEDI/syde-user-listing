@@ -30,8 +30,10 @@ class AjaxController
      * @return void
      */
     public function __construct(
-        private APIService $apiService, 
-        private CacheController $cacheController){}
+        private APIService $apiService,
+        private CacheController $cacheController
+    ) {
+    }
 
     /**
      * Register actions for fetching user details.
@@ -75,7 +77,8 @@ class AjaxController
 
         // Get and validate the user ID from POST
         $userId = isset($_POST['userId']) ? absint($_POST['userId']) : 0;
-        $apiEndpoint = isset($_POST['_apiEndpoint']) ? sanitize_text_field($_POST['_apiEndpoint']) : '';
+        $apiEndpoint = isset($_POST['_apiEndpoint'])
+        ? sanitize_text_field(wp_unslash($_POST['_apiEndpoint'])) : '';
 
         if (!$userId) {
             wp_send_json_error('Invalid userId');

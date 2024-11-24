@@ -22,26 +22,28 @@ class ShortcodeController
     /**
      * Constructor to initialize the dependencies and hook actions.
      *
-     * @param AjaxController $AjaxController The controller to interact with the external API.
+     * @param AjaxController $ajaxController The controller to interact with the external API.
      * @param ServiceFactory $serviceFactory The factory that creates services like API service.
      * @param CacheController $cacheController The controller that manages caching of user data.
      *
      * @since 1.0.0
      */
     public function __construct(
-        private AjaxController $AjaxController,
+        private AjaxController $ajaxController,
         private ServiceFactory $serviceFactory,
         private CacheController $cacheController
-    ) {}
+    ) {
+    }
 
     /**
      * Initialize the shortcode hooks and enqueue scripts.
-     * 
+     *
      * @return void
      * @since 1.0.0
-     * 
+     *
      */
-    public function register():void{
+    public function register(): void
+    {
         // Register the shortcode for rendering user listing.
         add_shortcode('syde_user_listing', [$this, 'renderShortCode']);
 
@@ -161,8 +163,7 @@ class ShortcodeController
             if (is_wp_error($data)) {
                 // If there's an error fetching data from the API, display an error message.
                 return esc_html(
-                    $data->get_error_message(),
-                    'syde-user-listing'
+                    $data->get_error_message()
                 );
             }
 
@@ -185,5 +186,4 @@ class ShortcodeController
 
         return wp_kses_post($output);
     }
-
 }

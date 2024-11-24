@@ -60,14 +60,18 @@ class CacheController
      *
      * @since 1.0.0
      */
-    public function cacheDataWithExpiration( string $cacheName, array $userInfo): void
+    public function cacheDataWithExpiration(string $cacheName, array $userInfo): void
     {
         // Store user data in the cache
         try {
             $this->serviceFactory->createCacheService()->cacheDataWithExpiration($cacheName, $userInfo);
-        } catch (\Exception $e) {
+        } catch (\Exception $error) {
             // Handle any exceptions that may occur during cache storage.
-            new \WP_Error('cache_storage_failed', 'An error occurred while storing the cache.');
+            new \WP_Error(
+                'cache_storage_failed',
+                'An error occurred while storing the cache.',
+                $error
+            );
             return;
         }
     }
@@ -92,7 +96,11 @@ class CacheController
             $this->serviceFactory->createCacheService()->deleteCache($cacheName);
         } catch (\Exception $error) {
             // Handle any exceptions that may occur during cache deletion.
-            new \WP_Error('cache_deletion_failed', 'An error occurred while deleting the cache.', $error);
+            new \WP_Error(
+                'cache_deletion_failed',
+                'An error occurred while deleting the cache.',
+                $error
+            );
             return;
         }
     }

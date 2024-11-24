@@ -41,7 +41,10 @@ class APIService implements APIServiceInterface
         // Validate the URL's accessibility.
         $headResponse = wp_remote_head($this->url);
         if (is_wp_error($headResponse) || wp_remote_retrieve_response_code($headResponse) !== 200) {
-            return new \WP_Error('url_not_accessible', 'The URL is not accessible or does not exist.');
+            return new \WP_Error(
+                'url_not_accessible',
+                'The URL is not accessible or does not exist.'
+            );
         }
 
         // Allow modifications to the URL and headers via filters.

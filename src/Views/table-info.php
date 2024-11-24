@@ -49,8 +49,7 @@ declare(strict_types=1);
                                             <?php echo esc_html($singleData[$key]); ?>
                                         </a>
                                     </td>
-                                    <?php
-                                }
+                                <?php }
                                 // Handle case where $value is an array and needs to be displayed recursively.
                                 elseif (is_array($singleData[$key])) {
                                     array_walk_recursive($singleData[$key], static function ($value, $key) use ($singleData, $firstKey) { ?>
@@ -74,5 +73,5 @@ declare(strict_types=1);
         </tbody>
     </table>
 
-    <div id="user-additional-data" data-api-url="<?php echo esc_attr( $apiEndpoint ); ?>"></div>
+    <div id="user-additional-data" data-api-url="<?php echo esc_url($apiEndpoint); ?>"></div>
 </div>

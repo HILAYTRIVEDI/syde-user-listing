@@ -34,19 +34,19 @@ declare(strict_types=1);
                         <li class="user-<?php echo esc_attr($fullKey); ?>" data-label="<?php echo esc_attr(ucwords(str_replace('_', ' ', $fullKey))); ?>">
                             <span class="key-label"><?php echo esc_html(ucwords(str_replace('_', ' ', $fullKey))); ?>:</span>
                             <ul>
-                                <?php $renderDetails($value, $fullKey); // Recursive call 
+                                <?php $renderDetails($value, $fullKey); // Recursive call
                                 ?>
                             </ul>
                         </li>
-                    <?php
+                        <?php
                     } else {
                         // Render scalar values directly.
-                    ?>
+                        ?>
                         <li class="user-<?php echo esc_attr($fullKey); ?>" data-label="<?php echo esc_attr(ucwords(str_replace('_', ' ', $fullKey))); ?>">
                             <span class="key-label"><?php echo esc_html(ucwords(str_replace('_', ' ', $fullKey))); ?>:</span>
                             <span class="value-data"><?php echo esc_html($value); ?></span>
                         </li>
-            <?php
+                        <?php
                     }
                 }
             };
@@ -59,7 +59,7 @@ declare(strict_types=1);
             <li class="no-user-data">
                 <?php echo esc_html__('No user details available.', 'syde-user-listing'); ?>
             </li>
-        <?php
+            <?php
         }
         ?>
     </ol>
