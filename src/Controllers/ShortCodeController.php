@@ -32,7 +32,16 @@ class ShortcodeController
         private AjaxController $AjaxController,
         private ServiceFactory $serviceFactory,
         private CacheController $cacheController
-    ) {
+    ) {}
+
+    /**
+     * Initialize the shortcode hooks and enqueue scripts.
+     * 
+     * @return void
+     * @since 1.0.0
+     * 
+     */
+    public function register():void{
         // Register the shortcode for rendering user listing.
         add_shortcode('syde_user_listing', [$this, 'renderShortCode']);
 

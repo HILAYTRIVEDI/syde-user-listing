@@ -55,6 +55,6 @@ final class SydeUserListing
     {
         $this->container->get(AdminController::class)?->register();
 
-        $this->container->get(ShortcodeController::class);
+        $this->container->get(ShortcodeController::class)->register();
     }
 }
