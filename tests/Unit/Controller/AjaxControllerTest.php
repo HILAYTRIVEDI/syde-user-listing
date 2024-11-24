@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Syde\UserListing\Tests\Controller;
+namespace Syde\UserListing\Tests\Unit\Controller;
 
 use Syde\UserListing\Tests\SydeUserListingTest;
 use \Syde\UserListing\Controllers\AjaxController;
