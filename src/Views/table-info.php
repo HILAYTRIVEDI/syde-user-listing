@@ -49,7 +49,7 @@ declare(strict_types=1);
                                             <?php echo esc_html($singleData[$key]); ?>
                                         </a>
                                     </td>
-                                    <?php }
+                                <?php }
                                 // Handle case where $value is an array and needs to be displayed recursively.
                                 elseif (is_array($singleData[$key])) {
                                     array_walk_recursive($singleData[$key], static function ($value, $key) use ($singleData, $firstKey) { ?>

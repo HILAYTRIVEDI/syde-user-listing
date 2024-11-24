@@ -67,9 +67,11 @@ class CacheController
             $this->serviceFactory->createCacheService()->cacheDataWithExpiration($cacheName, $userInfo);
         } catch (\Exception $error) {
             // Handle any exceptions that may occur during cache storage.
-            new \WP_Error('cache_storage_failed', 
-                'An error occurred while storing the cache.', 
-                $error);
+            new \WP_Error(
+                'cache_storage_failed',
+                'An error occurred while storing the cache.',
+                $error
+            );
             return;
         }
     }
