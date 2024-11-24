@@ -11,7 +11,9 @@ namespace Syde\UserListing\Controllers;
  */
 class AdminController
 {
-    public function __construct(private MenuPageController $menuPageController, private CacheController $cacheController)
+    public function __construct(
+        private MenuPageController $menuPageController, 
+        private CacheController $cacheController)
     {
     }
 

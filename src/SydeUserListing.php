@@ -7,6 +7,7 @@ namespace Syde\UserListing;
 use Syde\UserListing\Container\SydeContainer;
 use Syde\UserListing\Controllers\AdminController;
 use Syde\UserListing\Controllers\ShortcodeController;
+use Syde\UserListing\Controllers\AjaxController;
 
 /**
  * Main plugin class that initializes and registers services.
@@ -38,7 +39,7 @@ final class SydeUserListing
     public static function bootstrap(): void
     {
         $plugin = new self(new SydeContainer());
-        $plugin->registerServices();
+        $plugin->registerControllers();
     }
 
     /**
@@ -51,10 +52,10 @@ final class SydeUserListing
      * @throws \RuntimeException If a required service is not available.
      * @since 1.0.0
      */
-    public function registerServices(): void
+    public function registerControllers(): void
     {
         $this->container->get(AdminController::class)?->register();
-
         $this->container->get(ShortcodeController::class)->register();
+        $this->container->get(AjaxController::class)->register();
     }
 }

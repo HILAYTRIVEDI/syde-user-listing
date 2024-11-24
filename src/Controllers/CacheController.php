@@ -43,7 +43,6 @@ class CacheController
      */
     public function userCache(string $cacheName): array|bool
     {
-
         // Fetch cache using the cache service
         $cache = $this->serviceFactory->createCacheService()->returnCache($cacheName);
         return $cache;
