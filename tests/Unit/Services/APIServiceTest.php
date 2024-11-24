@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Syde\UserListing\Tests\Services;
+namespace Syde\UserListing\Tests\Unit\Services;
 
 use Syde\UserListing\Tests\SydeUserListingTest;
 

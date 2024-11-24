@@ -17,7 +17,7 @@ use Syde\UserListing\Factories\ServiceFactory;
  * @package Syde\UserListing\Controllers
  * @since 1.0.0
  */
-class ShortcodeController
+class ShortCodeController
 {
     /**
      * Constructor to initialize the dependencies and hook actions.
