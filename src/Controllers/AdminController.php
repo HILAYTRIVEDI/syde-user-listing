@@ -12,9 +12,9 @@ namespace Syde\UserListing\Controllers;
 class AdminController
 {
     public function __construct(
-        private MenuPageController $menuPageController, 
-        private CacheController $cacheController)
-    {
+        private MenuPageController $menuPageController,
+        private CacheController $cacheController
+    ) {
     }
 
     /**
@@ -29,7 +29,6 @@ class AdminController
         add_action('admin_menu', [$this, 'addApiEndpointMenu']);
         add_action('admin_init', [$this, 'registerAPIEndpointFields']);
     }
-
 
     /**
      * Add the API endpoint menu.

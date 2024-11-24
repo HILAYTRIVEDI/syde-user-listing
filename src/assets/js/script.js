@@ -10,7 +10,7 @@
                 e.preventDefault();
 
                 const dataId = e.target.dataset.id;
-                
+
                 // Short circuit if the user ID is unchanged
                 if (tempDataId === dataId) {
                     return;
@@ -40,7 +40,7 @@
                 displayLoadingMessage();
             },
             success: (response) =>
-            {   
+            {
                 if (response.success) {
                     displayUserData(response.data);
                 }
