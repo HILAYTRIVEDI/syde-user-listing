@@ -29,10 +29,9 @@ class AjaxController
      *
      * @return void
      */
-    public function __construct(private APIService $apiService, private CacheController $cacheController)
-    {
-        $this->register();
-    }
+    public function __construct(
+        private APIService $apiService, 
+        private CacheController $cacheController){}
 
     /**
      * Register actions for fetching user details.

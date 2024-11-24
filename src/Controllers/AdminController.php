@@ -11,7 +11,9 @@ namespace Syde\UserListing\Controllers;
  */
 class AdminController
 {
-    public function __construct(private MenuPageController $menuPageController, private CacheController $cacheController)
+    public function __construct(
+        private MenuPageController $menuPageController, 
+        private CacheController $cacheController)
     {
     }
 
@@ -28,11 +30,6 @@ class AdminController
         add_action('admin_init', [$this, 'registerAPIEndpointFields']);
     }
 
-    public function updateOptions(): void
-    {
-        // clear cached user data
-        $this->cacheController->deleteCache('data_list');
-    }
 
     /**
      * Add the API endpoint menu.
