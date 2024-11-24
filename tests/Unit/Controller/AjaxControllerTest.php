@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Controller;
+namespace Syde\UserListing\Tests\Controller;
 
-use PHPUnit\Framework\TestCase;
+use Syde\UserListing\Tests\SydeUserListingTest;
 use \Syde\UserListing\Controllers\AjaxController;
 use \Syde\UserListing\Controllers\CacheController;
 use \Syde\UserListing\Services\APIService;
 
 
-class AjaxControllerTest extends TestCase{
+class AjaxControllerTest extends SydeUserListingTest{
 
     /**
      * Helper function to create AjaxController with mocked dependencies.

@@ -30,7 +30,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Syde\\UserListing\\Tests\\": "tests/"
         }
     },
     "config": {

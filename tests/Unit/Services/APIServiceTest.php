@@ -2,13 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Controller;
+namespace Syde\UserListing\Tests\Services;
 
-use PHPUnit\Framework\TestCase;
+use Syde\UserListing\Tests\SydeUserListingTest;
+
 use Syde\UserListing\Services\APIService;
 
-class APIServiceTest extends TestCase{
+class APIServiceTest extends SydeUserListingTest{
     
+    /**
+     * Test the fetch method of the APIService.
+     * 
+     * @return void
+     */
     public function testFetch(): void{
 
         // Use helper to get AjaxController with mocks

@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Controller;
+namespace Syde\UserListing\Tests\Controller;
 
-use PHPUnit\Framework\TestCase;
+use Syde\UserListing\Tests\SydeUserListingTest;
 use Syde\UserListing\Controllers\AdminController;
 use Syde\UserListing\Controllers\MenuPageController;
 use Syde\UserListing\Controllers\CacheController;
 
-class AdminControllerTest extends TestCase
+class AdminControllerTest extends SydeUserListingTest
 {
     /**
      * Helper function to create AdminController with mocked dependencies.
