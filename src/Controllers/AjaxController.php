@@ -8,7 +8,6 @@ use Syde\UserListing\Services\APIService;
 use Syde\UserListing\Services\SydeSanitizationService;
 use Syde\UserListing\Controllers\CacheController;
 
-
 /**
  * Class AjaxController
  *
@@ -26,7 +25,7 @@ class AjaxController
      *
      * @param APIService $apiService The API service responsible for fetching user details.
      * @param CacheController $cacheController The cache controller for managing caching.
-     * @param SydeSanitizationService $sanitizationService The sanitization service for sanitizing data.
+     * @param SydeSanitizationService $sanitizationService
      *
      * @since 1.0.0
      *
@@ -37,7 +36,6 @@ class AjaxController
         private CacheController $cacheController,
         private SydeSanitizationService $sanitizationService
     ) {
-
     }
 
     /**
@@ -68,9 +66,9 @@ class AjaxController
      */
     public function fetchUserDetails(): void
     {
-        $nonce = $this->sanitizationService->sanitizeTextField(
-            isset($_POST['_wpnonce']) ? wp_unslash($_POST['_wpnonce']) : ''
-        );
+        $nonce = isset($_POST['_wpnonce']) ?
+                $this->sanitizationService->sanitizeTextField(($_POST['_wpnonce']))
+            : '';
 
         if (!wp_verify_nonce($nonce, 'syde_user_listing')) {
             wp_send_json_error('Invalid nonce');
