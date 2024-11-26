@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Syde\UserListing\Controllers;
 
+use Syde\UserListing\Services\SydeSanitizationService;
+
 /**
  * Class AdminController
  *
@@ -13,7 +15,8 @@ class AdminController
 {
     public function __construct(
         private MenuPageController $menuPageController,
-        private CacheController $cacheController
+        private CacheController $cacheController,
+        private SydeSanitizationService $sanitizationService
     ) {
     }
 
@@ -66,7 +69,7 @@ class AdminController
         $this->menuPageController->registerMenuPageField(
             'api_endpoint_settings',
             'api_endpoint_url',
-            'sanitize_text_field'
+            [$this->sanitizationService, 'sanitizeUrl']
         );
 
         // Add hooks for extensibility
