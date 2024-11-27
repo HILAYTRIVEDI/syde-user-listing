@@ -5,20 +5,25 @@ declare(strict_types=1);
 namespace Syde\UserListing\Services;
 
 use Syde\UserListing\Interfaces\APIServiceInterface;
+use Syde\UserListing\Services\SydeErrorHandlingService;
 
-/**
- * Class APIService
- *
- * Handles API requests and responses with WordPress HTTP functions.
- *
- * @package Syde\UserListing\Services
- */
 class APIService implements APIServiceInterface
 {
     /**
      * The base URL for API requests.
      */
     private string $url;
+
+
+    /**
+     * Constructor.
+     *
+     * @param SydeErrorHandlingService $errorService The error handling service.
+     */
+    public function __construct(private SydeErrorHandlingService $errorService)
+    {
+        $this->errorService = $errorService;
+    }
 
     /**
      * Fetch data from an API endpoint.
@@ -35,15 +40,20 @@ class APIService implements APIServiceInterface
         // Validate the URL format.
         if (!filter_var($this->url, FILTER_VALIDATE_URL)) {
             do_action('syde_user_listing_api_service_invalid_url', $url);
-            return new \WP_Error('invalid_url', 'Invalid URL provided.');
+            return $this->errorService->createError(
+                'Invalid URL provided.',
+                'invalid_url',
+                $url
+            );
         }
 
         // Validate the URL's accessibility.
         $headResponse = wp_remote_head($this->url);
         if (is_wp_error($headResponse) || wp_remote_retrieve_response_code($headResponse) !== 200) {
-            return new \WP_Error(
+            return $this->errorService->createError(
+                'The URL is not accessible or does not exist.',
                 'url_not_accessible',
-                'The URL is not accessible or does not exist.'
+                $this->url
             );
         }
 
@@ -54,9 +64,10 @@ class APIService implements APIServiceInterface
         // Send the GET request and retrieve the response body.
         $response = wp_safe_remote_get($this->url, ['headers' => $headers]);
         if (is_wp_error($response)) {
-            return new \WP_Error(
+            return $this->errorService->createError(
+                'Error fetching data from the API.',
                 'api_request_failed',
-                'Error fetching data from the API: ' . wp_kses_post($response->get_error_message())
+                $response->get_error_message()
             );
         }
 
@@ -65,7 +76,11 @@ class APIService implements APIServiceInterface
 
         // Ensure the response is a valid JSON object.
         if (json_last_error() !== JSON_ERROR_NONE) {
-            return new \WP_Error('invalid_json', 'Invalid JSON response from the API.');
+            return $this->errorService->createError(
+                'Invalid JSON response from the API.',
+                'invalid_json',
+                json_last_error_msg()
+            );
         }
 
         // Allow modifications to the decoded response via a filter.
