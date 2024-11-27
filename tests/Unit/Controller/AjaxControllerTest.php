@@ -8,6 +8,7 @@ use Syde\UserListing\Tests\SydeUserListingTest;
 use \Syde\UserListing\Controllers\AjaxController;
 use \Syde\UserListing\Controllers\CacheController;
 use \Syde\UserListing\Services\APIService;
+use Syde\UserListing\Services\SydeSanitizationService;
 
 
 class AjaxControllerTest extends SydeUserListingTest{
@@ -21,8 +22,9 @@ class AjaxControllerTest extends SydeUserListingTest{
     {
         $cacheController = $this->createMock(CacheController::class);
         $apiService = $this->createMock(APIService::class);
+        $sydeSanitizationService = $this->createMock(SydeSanitizationService::class);
 
-        return new AjaxController($apiService, $cacheController);
+        return new AjaxController($apiService, $cacheController, $sydeSanitizationService);
     }
 
     /**
