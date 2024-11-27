@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Syde\UserListing\Controllers;
 
 use Syde\UserListing\Services\APIService;
+use Syde\UserListing\Services\SydeSanitizationService;
 use Syde\UserListing\Controllers\CacheController;
 
 /**
@@ -24,6 +25,7 @@ class AjaxController
      *
      * @param APIService $apiService The API service responsible for fetching user details.
      * @param CacheController $cacheController The cache controller for managing caching.
+     * @param SydeSanitizationService $sanitizationService
      *
      * @since 1.0.0
      *
@@ -31,7 +33,8 @@ class AjaxController
      */
     public function __construct(
         private APIService $apiService,
-        private CacheController $cacheController
+        private CacheController $cacheController,
+        private SydeSanitizationService $sanitizationService
     ) {
     }
 
@@ -63,22 +66,20 @@ class AjaxController
      */
     public function fetchUserDetails(): void
     {
-        $nonce = sanitize_text_field(
-            isset($_POST['_wpnonce'])
-            ? wp_unslash($_POST['_wpnonce'])
-            : ''
-        );
+        $nonce = isset($_POST['_wpnonce']) ?
+                $this->sanitizationService->sanitizeTextField(($_POST['_wpnonce']))
+            : '';
 
         if (!wp_verify_nonce($nonce, 'syde_user_listing')) {
             wp_send_json_error('Invalid nonce');
             return;
         }
 
-
         // Get and validate the user ID from POST
-        $userId = isset($_POST['userId']) ? absint($_POST['userId']) : 0;
+        $userId = isset($_POST['userId']) ? $this->sanitizationService->sanitizeInt($_POST['userId']) : 0;
         $apiEndpoint = isset($_POST['_apiEndpoint'])
-        ? sanitize_text_field(wp_unslash($_POST['_apiEndpoint'])) : '';
+        ? $this->sanitizationService->sanitizeUrl($_POST['_apiEndpoint']) : '';
+
 
         if (!$userId) {
             wp_send_json_error('Invalid userId');
