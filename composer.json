@@ -40,6 +40,7 @@
     },
     "require-dev": {
         "inpsyde/php-coding-standards": "^2@dev",
-        "phpunit/phpunit": "^11.4"
+        "phpunit/phpunit": "^11.4",
+        "phpunit/php-code-coverage": "^11.0"
     }
 }
