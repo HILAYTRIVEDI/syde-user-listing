@@ -9,6 +9,56 @@ The Syde User Listing plugin allows you to fetch and display user data from an e
 - Composer (for managing dependencies)
 - Access to an API that provides user data
 
+## Folder Structure
+```
+├── README.md
+├── composer.json
+├── composer.lock
+├── phpcs.xml.dist
+├── phpunit.xml
+├── src
+│   ├── Container
+│   │   └── SydeContainer.php
+│   ├── Controllers
+│   │   ├── AdminController.php
+│   │   ├── AjaxController.php
+│   │   ├── CacheController.php
+│   │   ├── MenuPageController.php
+│   │   └── ShortCodeController.php
+│   ├── Exceptions
+│   │   └── ContainerException.php
+│   ├── Factories
+│   │   └── ServiceFactory.php
+│   ├── Interfaces
+│   │   └── APIServiceInterface.php
+│   ├── Services
+│   │   ├── APIService.php
+│   │   ├── CacheService.php
+│   │   ├── SydeErrorService.php
+│   │   └── SydeSanitizationService.php
+│   ├── SydeUserListing.php
+│   ├── Views
+│   │   ├── admin-page.php
+│   │   ├── single-user.php
+│   │   └── table-info.php
+│   └── assets
+│       ├── css
+│       │   └── style.css
+│       └── js
+│           └── script.js
+├── syde-user-listing.php
+└── tests
+    ├── SydeUserListingTest.php
+    ├── Unit
+    │   ├── Controller
+    │   │   ├── AdminControllerTest.php
+    │   │   └── AjaxControllerTest.php
+    │   └── Services
+    │       ├── APIServiceTest.php
+    │       └── CacheServiceTest.php
+    └── bootstrap.php
+```
+
 ## Installation
 
 ### 1. Install via Composer
@@ -29,12 +79,14 @@ The Syde User Listing plugin allows you to fetch and display user data from an e
 2. Extract the files and upload the plugin folder to `wp-content/plugins/`.
 3. Activate the plugin from the WordPress admin panel.
 
-## Configuration
+## Configuration ( Optional )
+
+- These steps are not mandatory to make the plugin work but it just add support for the default API endpoint if non is given in the sortcode.
 
 1. Go to Settings → API Endpoint Settings in the WordPress dashboard.
 2. Enter the Default API Endpoint URL to the API that provides user data.
-3. You can add additional custom fields to the API configuration page using the `additional_api_endpoint_fields` action hook.
-4. Once configured, the user data will automatically be fetched and displayed in both the admin panel and the front-end.
+3. Add custom fields to the API configuration page using the `additional_api_endpoint_fields` action hook.
+4. Once configured, the user data will automatically be fetched and displayed in both the admin panel and the front end.
 
 ## Features
 
@@ -47,27 +99,49 @@ The Syde User Listing plugin allows you to fetch and display user data from an e
 
 ### Front-End Display
 
-Once the plugin is configured, the user data will be shown on the front-end:
+Once the plugin is configured, here are the steps to display table on the front end:
 
+- The plugin provides a shortcode `syde_user_listing` you can pass the end point as a attribute to the shortcode, if the endpoint is blank it will take teh value from the admin input field. So the whole shortcode will look something like the below:
+
+```
+[syde_user_listing endpoint="https://jsonplaceholder.typicode.com/posts"]
+```
+ 
 - Data is displayed in a responsive table format.
 - Each user's details can be expanded to view additional information, including nested data.
 
-### Admin Page
-
-- The plugin adds an API Endpoint Settings page where administrators can configure the API endpoint URL.
-- Custom fields can be added to this settings page using the `additional_api_endpoint_fields` hook.
 
 ## Non-Obvious Implementation Choices
 
 ### 1. Service Factory and Dependency Injection
 
-   The plugin uses a Service Factory pattern to manage the creation of services like the `APIService` and `CacheService`. This approach decouples the instantiation of services from the rest of the application, allowing for easier modifications and testing. For example:
+   The plugin uses a Service Factory pattern to manage the creation of services like the `APIService`, `SydeErrorService`, `SydeSanitizationService`, and `CacheService`. This approach decouples the instantiation of services from the rest of the application, allowing for easier modifications and testing. For example:
 
-   ```
+   ```php
    public static function createApiService(): APIService
    {
        return new APIService();
    }
+   ```
+
+   ```php
+   public static function createCacheService(): CacheService
+    {
+        return new CacheService();
+    }
+   ```
+
+   ```php
+    public static function createSanitizationService(): SydeSanitizationService
+    {
+        return new SydeSanitizationService();
+    }
+   ```
+   ```php
+    public static function createErrorService(): SydeErrorService
+    {
+        return new SydeErrorService();
+    }
    ```
 
    This approach also makes it easier to swap out service implementations if needed in the future (e.g., changing caching strategies).
@@ -76,7 +150,7 @@ Once the plugin is configured, the user data will be shown on the front-end:
 
    To handle deeply nested user data, the plugin recursively renders the details. This ensures that any complex data structure (such as nested arrays) is automatically processed and displayed, reducing the need for hardcoding and making the plugin more flexible:
 
-   ```
+   ```php
    $renderDetails = static function ($data, $prefix = '') use (&$renderDetails) {
        foreach ($data as $key => $value) {
            if (is_array($value)) {
@@ -92,7 +166,7 @@ Once the plugin is configured, the user data will be shown on the front-end:
 
    To optimize performance, the plugin caches API responses using WordPress's transients API. This reduces unnecessary API calls and improves load times by serving cached data for a specified duration. The default expiration time is set to 12 hours:
 
-   ```
+   ```php
    public function cacheDataWithExpiration(string $cacheKey, mixed $data, int $expiration = 12 * HOUR_IN_SECONDS): void
    {
        set_transient($cacheKey, $data, $expiration);
@@ -101,23 +175,27 @@ Once the plugin is configured, the user data will be shown on the front-end:
 
    You can modify the expiration time based on your needs or even disable caching entirely by adjusting the settings.
 
-### 4. Error Handling
-
-   The plugin gracefully handles various errors, such as invalid URLs or failed API requests. Using `WP_Error` ensures that errors are integrated with WordPress’s error handling system and can be easily debugged:
-
+### 4. Autowiring in the DIC ( Dependency injection Container )r
+   `SydeContainer` supports autowiring to automatically resolve and inject dependencies by analyzing class constructors with PHP Reflection. This simplifies dependency management and eliminates the need for extensive manual configurations.
+   
+   To resolve a class, call the `get` method. Dependencies will be instantiated and injected as needed. For example:
+   
+   ```php
+   $serviceA = $container->get(ServiceA::class);
    ```
-   if (!filter_var($this->url, FILTER_VALIDATE_URL)) {
-       return new \WP_Error('invalid_url', 'Invalid URL provided.');
-   }
+   
+   You can also manually bind a class or interface with a custom resolver:
+   
+   ```php
+   $container->set(MyInterface::class, fn($c) => new MyImplementation());
    ```
-
-   This provides clear feedback to the user if something goes wrong, improving the overall user experience.
+   
+   This efficient auto-wiring mechanism ensures reusable, clean, and manageable dependency handling while adhering to PSR-11 standards.
+   
 
 ## Contributing
 
-We welcome contributions to this project! Please fork the repository, create a feature branch, and submit a pull request with your changes. Make sure to follow the coding standards and write tests for any new functionality.
+I welcome your contributions  to this project! Please fork the repository, create a feature branch, and submit a pull request with your changes. Make sure to follow the coding standards and write tests for any new functionality.
 
 ## License
-
-This plugin is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-```
+This plugin is licensed under the GNU General Public License v3.0 or later (GPL-3.0-or-later). See the [LICENSE](LICENSE) file for details.
