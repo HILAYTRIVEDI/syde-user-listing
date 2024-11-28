@@ -6,6 +6,8 @@ namespace Syde\UserListing\Factories;
 
 use Syde\UserListing\Services\APIService;
 use Syde\UserListing\Services\CacheService;
+use Syde\UserListing\Services\SydeSanitizationService;
+use Syde\UserListing\Services\SydeErrorService;
 
 /**
  * Factory class to create service instances.
@@ -42,5 +44,34 @@ class ServiceFactory
     public static function createCacheService(): CacheService
     {
         return new CacheService();
+    }
+
+    /**
+     * Create an instance of SydeSanitizationService.
+     *
+     * Provides a sanitization mechanism for user input.
+     *
+     * @since 1.0.0
+     *
+     * @return SydeSanitizationService The created sanitization service instance.
+     */
+    public static function createSanitizationService(): SydeSanitizationService
+    {
+        return new SydeSanitizationService();
+    }
+
+
+    /**
+     * Create an instance of SydeErrorService.
+     *
+     * Provides a mechanism for handling errors.
+     *
+     * @since 1.0.0
+     *
+     * @return SydeErrorService The created error service instance.
+     */
+    public static function createErrorService(): SydeErrorService
+    {
+        return new SydeErrorService();
     }
 }
