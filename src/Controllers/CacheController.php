@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Syde\UserListing\Controllers;
 
 use Syde\UserListing\Factories\ServiceFactory;
+use Syde\UserListing\Services\SydeErrorService;
+
 
 /**
  * Cache controller class for caching the data and storing it in the options table.
@@ -24,7 +26,7 @@ class CacheController
      *
      * @return void
      */
-    public function __construct(private ServiceFactory $serviceFactory)
+    public function __construct(private ServiceFactory $serviceFactory, private SydeErrorService $errorService)
     {
     }
 
@@ -66,11 +68,9 @@ class CacheController
         try {
             $this->serviceFactory->createCacheService()->cacheDataWithExpiration($cacheName, $userInfo);
         } catch (\Exception $error) {
-            // Handle any exceptions that may occur during cache storage.
-            new \WP_Error(
+            $this->errorService->handleError(
                 'cache_storage_failed',
-                'An error occurred while storing the cache.',
-                $error
+                'An error occurred while storing the cache.'
             );
             return;
         }
@@ -96,10 +96,9 @@ class CacheController
             $this->serviceFactory->createCacheService()->deleteCache($cacheName);
         } catch (\Exception $error) {
             // Handle any exceptions that may occur during cache deletion.
-            new \WP_Error(
+            $this->errorService->handleError(
                 'cache_deletion_failed',
-                'An error occurred while deleting the cache.',
-                $error
+                'An error occurred while deleting the cache.'
             );
             return;
         }
