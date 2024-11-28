@@ -78,8 +78,7 @@ class APIService implements APIServiceInterface
         if (json_last_error() !== JSON_ERROR_NONE) {
             return $this->errorService->handleError(
                 'invalid_json', 
-                'Invalid JSON response from the API.'
-            );
+                'Invalid JSON response from the API.');
         }
 
         // Allow modifications to the decoded response via a filter.
