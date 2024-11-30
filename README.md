@@ -173,6 +173,16 @@ Once the plugin is configured, here are the steps to display table on the front 
    }
    ```
 
+   Also in the `scrip.js` file, the id of a user is matched with the previously fetched user id
+   if they match , then the js will shot circuit the fetching and will not fetch the user details again.
+
+   ```javascript
+    if (data.id === tempDataId)
+    {
+        return;
+    }
+   ```
+
    You can modify the expiration time based on your needs or even disable caching entirely by adjusting the settings.
 
 ### 4. Autowiring in the DIC ( Dependency injection Container )r
