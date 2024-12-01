@@ -33,6 +33,7 @@ The Syde User Listing plugin allows you to fetch and display user data from an e
 │   │   └── APIServiceInterface.php
 │   ├── Services
 │   │   ├── APIService.php
+│   │   ├── AllowTagsService.php
 │   │   ├── CacheService.php
 │   │   ├── SydeErrorService.php
 │   │   └── SydeSanitizationService.php
@@ -45,6 +46,7 @@ The Syde User Listing plugin allows you to fetch and display user data from an e
 │       ├── css
 │       │   └── style.css
 │       └── js
+│           ├── admin-script.js
 │           └── script.js
 ├── syde-user-listing.php
 └── tests
@@ -55,6 +57,7 @@ The Syde User Listing plugin allows you to fetch and display user data from an e
     │   │   └── AjaxControllerTest.php
     │   └── Services
     │       ├── APIServiceTest.php
+    │       ├── AllowTagsServiceTest.php
     │       └── CacheServiceTest.php
     └── bootstrap.php
 ```
@@ -115,7 +118,7 @@ Once the plugin is configured, here are the steps to display table on the front 
 
 ### 1. Service Factory and Dependency Injection
 
-   The plugin uses a Service Factory pattern to manage the creation of services like the `APIService`, `SydeErrorService`, `SydeSanitizationService`, and `CacheService`. This approach decouples the instantiation of services from the rest of the application, allowing for easier modifications and testing. For example:
+   The plugin uses a Service Factory pattern to manage the creation of services like the `APIService`, `SydeErrorService`, `SydeSanitizationService`,`AllowTagsService` and `CacheService`. This approach decouples the instantiation of services from the rest of the application, allowing for easier modifications and testing. For example:
 
    ```php
    public static function createApiService(): APIService
@@ -141,6 +144,12 @@ Once the plugin is configured, here are the steps to display table on the front 
     public static function createErrorService(): SydeErrorService
     {
         return new SydeErrorService();
+    }
+   ```
+   ```php
+    public static function createAllowTagsService(): AllowTagsService
+    {
+        return new AllowTagsService();
     }
    ```
 
