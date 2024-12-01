@@ -51,6 +51,9 @@ class AjaxController
     {
         add_action('wp_ajax_fetch_user_details', [$this, 'fetchUserDetails']);
         add_action('wp_ajax_nopriv_fetch_user_details', [$this, 'fetchUserDetails']);
+
+        add_action('wp_ajax_remove_cache', [$this, 'removeCache']);
+        add_action('wp_ajax_nopriv_remove_cache', [$this, 'removeCache']);
     }
 
     /**
@@ -107,6 +110,40 @@ class AjaxController
 
         // Return the success response with HTML content
         wp_send_json_success($userDetailsHtml);
+        wp_die();
+    }
+
+    public function removeCache(): void
+    {
+        $nonce = isset($_POST['_wpnonce']) ?
+                $this->sanitizationService->sanitizeTextField(($_POST['_wpnonce']))
+            : '';
+
+        if (!wp_verify_nonce($nonce, 'syde_user_listing_admin')) {
+            wp_send_json_error('Invalid nonce');
+            wp_die();
+        }
+
+        // ge the data and encode it in md5 to prepare for cache key
+        $data = isset($_POST['data']) ? $this->sanitizationService->sanitizeTextField(($_POST['data'])) : '';
+
+        if (!$data) {
+            wp_send_json_error('Invalid data');
+            wp_die();
+        }
+
+        $cacheKey = md5($data);
+
+
+        // delete the cache
+        try {
+            $this->cacheController->deleteCache('data_list_'.$cacheKey);
+        } catch (\Exception $e) {
+            wp_send_json_error($e->getMessage());
+            return;
+        }
+
+        wp_send_json_success();
         wp_die();
     }
 }

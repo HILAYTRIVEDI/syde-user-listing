@@ -8,6 +8,10 @@ use Syde\UserListing\Services\SydeSanitizationService;
 
 /**
  * Class AdminController
+ * 
+ * THis class is responsible for handling the admin page functionalities in the
+ * Syde User Listing plugin.It includes registering the admin page, registering
+ * the required settings fields, and rendering the admin page.
  *
  * @package Syde\UserListing\Controllers
  */
@@ -22,6 +26,9 @@ class AdminController
 
     /**
      * Register the admin menu.
+     * 
+     * This method registers the admin menu and initializes the admin page.
+     * It also registers the required settings fields and actions.
      *
      * @return void
      * @since 1.0.0
@@ -31,10 +38,45 @@ class AdminController
     {
         add_action('admin_menu', [$this, 'addApiEndpointMenu']);
         add_action('admin_init', [$this, 'registerAPIEndpointFields']);
+
+        // Enqueue the admin page script
+        add_action('admin_enqueue_scripts', [$this, 'enqueueAdminPageScript']);
+    }
+
+    /**
+     * Enqueue the admin page script.
+     * 
+     * This method enqueues the admin page script to handle the removal of the cache.
+     *
+     * @return void
+     * @since 1.0.0
+     * @access public
+     */
+    public function enqueueAdminPageScript(): void
+    {
+        wp_enqueue_script(
+            'syde-user-listing-admin-script',
+            SYDE_USER_LISTING_PLUGIN_URL . 'src/assets/js/admin-script.js',
+            [],
+            SYDE_USER_LISTING_VERSION,
+            true
+        );
+
+        wp_localize_script(
+            'syde-user-listing-admin-script',
+            'syde_user_listing_admin',
+            [
+                'ajax_url' => admin_url('admin-ajax.php'),
+                'nonce' => wp_create_nonce('syde_user_listing_admin'),
+            ]
+        );
     }
 
     /**
      * Add the API endpoint menu.
+     * 
+     * This method adds the API endpoint menu to the admin menu to allow users
+     * to configure the Default API Endpoint URL and additional settings.
      *
      * @return void
      * @since 1.0.0
@@ -43,8 +85,8 @@ class AdminController
     public function addApiEndpointMenu(): void
     {
         add_menu_page(
-            'Default API Endpoint',
-            'DefaultAPI Endpoint',
+            'API Endpoint Settings',
+            'API Endpoint Settings',
             'manage_options',
             'api_endpoint',
             [$this, 'renderApiEndpointPage'],
@@ -55,6 +97,11 @@ class AdminController
 
     /**
      * Render the API endpoint page.
+     * 
+     * This method renders the admin page for configuring the API endpoint URL
+     * and it utilizes the `registerMenuPageField` method to register the
+     * settings fields. It also adds the `additional_api_endpoint_fields` hook
+     * to allow for additional fields to be added.
      *
      * @return void
      * @since 1.0.0
@@ -65,17 +112,33 @@ class AdminController
     public function registerAPIEndpointFields(): void
     {
         // Register settings with sanitization
-
         $this->menuPageController->registerMenuPageField(
             'api_endpoint_settings',
             'api_endpoint_url',
             [$this->sanitizationService, 'sanitizeUrl']
         );
 
+        $this->menuPageController->registerMenuPageField(
+            'api_endpoint_settings',
+            'api_endpoint_remove_cache_url',
+            [$this->sanitizationService, 'sanitizeUrl']
+        );
         // Add hooks for extensibility
         do_action('register_api_endpoint_fields');
     }
 
+    /**
+     * Render the admin page.
+     * 
+     * This method renders the admin page for configuring the API endpoint URL and
+     * also allows to add the specific url for removing the cache.
+     *
+     * @return void
+     * @since 1.0.0
+     * @access public
+     *
+     * @action admin_menu
+     */
     public function renderApiEndpointPage(): void
     {
         try{
@@ -98,6 +161,7 @@ class AdminController
                     'class' => [],
                 ],
                 'input' => [
+                    'id' => [],
                     'type' => [],
                     'name' => [],
                     'value' => [],
@@ -109,6 +173,11 @@ class AdminController
                 'form' => [
                     'method' => [],
                     'action' => [],
+                    'class' => [],
+                ],
+                'button' => [
+                    'id' => [],
+                    'type' => [],
                     'class' => [],
                 ],
             ]);

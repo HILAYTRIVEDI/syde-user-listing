@@ -185,6 +185,9 @@ class ShortCodeController
             // Return the generated HTML output.
             $output = ob_get_clean();
 
+            // Append contextual data to the output comming from the $content.
+            $output .= $content;
+
             return wp_kses_post($output);
        } catch (\Exception $e) {
             ob_end_clean();
