@@ -177,13 +177,25 @@ class ShortCodeController
          */
         $data = apply_filters('syde_user_listing_users', $data, $atts);
 
-        // Capture the output of the table info template.
-        ob_start();
-        include_once SYDE_USER_LISTING_PLUGIN_DIR . 'src/Views/table-info.php';
+       try{
+            // Capture the output of the table info template.
+            ob_start();
+            include_once SYDE_USER_LISTING_PLUGIN_DIR . 'src/Views/table-info.php';
 
-        // Return the generated HTML output.
-        $output = ob_get_clean();
+            // Return the generated HTML output.
+            $output = ob_get_clean();
 
-        return wp_kses_post($output);
+            // Append contextual data to the output comming from the $content.
+            $output .= $content;
+
+            return wp_kses_post($output);
+       } catch (\Exception $e) {
+            ob_end_clean();
+            printf(
+                __('An error occurred while rendering the shortcode: %s', 'syde-user-listing'),
+                esc_html($e->getMessage())
+            );
+            return '';
+       }
     }
 }
