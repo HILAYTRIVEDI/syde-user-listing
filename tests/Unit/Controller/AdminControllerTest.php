@@ -9,6 +9,7 @@ use Syde\UserListing\Controllers\AdminController;
 use Syde\UserListing\Controllers\MenuPageController;
 use Syde\UserListing\Controllers\CacheController;
 use Syde\UserListing\Services\SydeSanitizationService;
+use Syde\UserListing\Services\AllowTagsService;
 
 
 class AdminControllerTest extends SydeUserListingTest
@@ -23,8 +24,14 @@ class AdminControllerTest extends SydeUserListingTest
         $menuPageControllerMock = $this->createMock(MenuPageController::class);
         $cacheControllerMock = $this->createMock(CacheController::class);
         $sydeSanitizationService = $this->createMock(SydeSanitizationService::class);
+        $allowTagsService = $this->createMock(AllowTagsService::class);
 
-        return new AdminController($menuPageControllerMock, $cacheControllerMock, $sydeSanitizationService);
+        return new AdminController(
+            $menuPageControllerMock, 
+            $cacheControllerMock, 
+            $sydeSanitizationService,
+            $allowTagsService
+        );
     }
 
     /**

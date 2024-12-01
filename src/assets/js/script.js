@@ -55,7 +55,7 @@
             })
             .catch(error =>
             {
-                displayError('Failed to fetch user details.');
+                displayError('Failed to fetch user details.' + error);
             });
     }
 
