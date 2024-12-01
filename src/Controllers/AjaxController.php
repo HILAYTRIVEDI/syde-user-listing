@@ -113,6 +113,16 @@ class AjaxController
         wp_die();
     }
 
+    /**
+     * Remove cache.
+     * 
+     * This function removes the cache for the given url in the admin panel
+     * and returns a success or error message.
+     * 
+     * @return void
+     * @since 1.0.0
+     * @access public
+     */
     public function removeCache(): void
     {
         $nonce = isset($_POST['_wpnonce']) ?
@@ -121,7 +131,7 @@ class AjaxController
 
         if (!wp_verify_nonce($nonce, 'syde_user_listing_admin')) {
             wp_send_json_error('Invalid nonce');
-            wp_die();
+            return;
         }
 
         // ge the data and encode it in md5 to prepare for cache key
@@ -129,13 +139,11 @@ class AjaxController
 
         if (!$data) {
             wp_send_json_error('Invalid data');
-            wp_die();
+            return;
         }
 
         $cacheKey = md5($data);
 
-
-        // delete the cache
         try {
             $this->cacheController->deleteCache('data_list_'.$cacheKey);
         } catch (\Exception $e) {

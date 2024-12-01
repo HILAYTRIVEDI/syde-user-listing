@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Syde\UserListing\Controllers;
 
 use Syde\UserListing\Services\SydeSanitizationService;
+use Syde\UserListing\Services\AllowTagsService;
 
 /**
  * Class AdminController
@@ -20,7 +21,8 @@ class AdminController
     public function __construct(
         private MenuPageController $menuPageController,
         private CacheController $cacheController,
-        private SydeSanitizationService $sanitizationService
+        private SydeSanitizationService $sanitizationService,
+        private AllowTagsService $allowTagsService
     ) {
     }
 
@@ -146,41 +148,14 @@ class AdminController
             include_once SYDE_USER_LISTING_PLUGIN_DIR . 'src/Views/admin-page.php';
             $output = ob_get_clean();
 
-            echo wp_kses($output, [
-                'table' => [
-                    'class' => [],
-                ],
-                'tr' => [
-                    'class' => [],
-                ],
-                'th' => [
-                    'scope' => [],
-                    'class' => [],
-                ],
-                'td' => [
-                    'class' => [],
-                ],
-                'input' => [
-                    'id' => [],
-                    'type' => [],
-                    'name' => [],
-                    'value' => [],
-                    'class' => [],
-                ],
-                'h1' => [
-                    'class' => [],
-                ],
-                'form' => [
-                    'method' => [],
-                    'action' => [],
-                    'class' => [],
-                ],
-                'button' => [
-                    'id' => [],
-                    'type' => [],
-                    'class' => [],
-                ],
-            ]);
+            echo wp_kses($output, 
+                $this->allowTagsService
+                ->getAllowedTagsAtributes(
+                    [
+                        'table', 'tr', 'th', 'td', 'input', 'h1', 'form', 'button'
+                    ]
+            ));
+
         } catch (\Exception $e) {
             printf(
                __('An error occurred while rendering the admin page: %s', 'syde-user-listing'),
