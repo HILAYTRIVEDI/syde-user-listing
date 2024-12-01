@@ -56,5 +56,5 @@ class AjaxControllerTest extends SydeUserListingTest{
         $this->assertIsCallable([$ajaxController, 'fetchUserDetails']);
     
     }
-    
+  
 }

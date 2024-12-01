@@ -94,9 +94,15 @@ class AjaxController
         }
 
         // Capture the user details HTML for response
-        ob_start();
-        require_once SYDE_USER_LISTING_PLUGIN_DIR . 'src/Views/single-user.php';
-        $userDetailsHtml = ob_get_clean();
+       try{
+            ob_start();
+            require_once SYDE_USER_LISTING_PLUGIN_DIR . 'src/Views/single-user.php';
+            $userDetailsHtml = ob_get_clean();
+       } catch (\Exception $e) {
+            ob_end_clean();
+            wp_send_json_error($e->getMessage());
+            return;
+       }
 
 
         // Return the success response with HTML content
