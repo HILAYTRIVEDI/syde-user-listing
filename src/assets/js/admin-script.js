@@ -1,8 +1,8 @@
-document.addEventListener('DOMContentLoaded',(function (){
+document.addEventListener('DOMContentLoaded',(function () {
     const removeCacheButton = document.querySelector('#remove-cache-button');
     const removeCacheUrl = document.querySelector('#remove-cache-url');
-    
-    removeCacheButton?.addEventListener('click', function (e) {
+
+    removeCacheButton ? .addEventListener('click', function (e) {
         e.preventDefault();
 
         // construct the form data

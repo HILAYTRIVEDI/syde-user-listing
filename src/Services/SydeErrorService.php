@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace Syde\UserListing\Services;
+
 use WP_Error;
 
 /**
@@ -28,7 +29,7 @@ class SydeErrorService
      * @param string $errorCode The error code to be logged.
      * @param string $errorMessage The error message to be logged.
      * @param mixed $errorData The error data to be logged.
-     * 
+     *
      * @return WP_Error The WP_Error object.
      *
      * @since 1.0.0

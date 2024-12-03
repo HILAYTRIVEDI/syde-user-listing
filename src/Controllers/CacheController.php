@@ -7,7 +7,6 @@ namespace Syde\UserListing\Controllers;
 use Syde\UserListing\Factories\ServiceFactory;
 use Syde\UserListing\Services\SydeErrorService;
 
-
 /**
  * Cache controller class for caching the data and storing it in the options table.
  *

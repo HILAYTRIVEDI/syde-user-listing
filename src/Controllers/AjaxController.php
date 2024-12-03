@@ -70,7 +70,7 @@ class AjaxController
     public function fetchUserDetails(): void
     {
         $nonce = isset($_POST['_wpnonce']) ?
-                $this->sanitizationService->sanitizeTextField(($_POST['_wpnonce']))
+                $this->sanitizationService->sanitizeTextField(wp_unslash($_POST['_wpnonce']))
             : '';
 
         if (!wp_verify_nonce($nonce, 'syde_user_listing')) {
@@ -79,9 +79,11 @@ class AjaxController
         }
 
         // Get and validate the user ID from POST
-        $userId = isset($_POST['userId']) ? $this->sanitizationService->sanitizeInt($_POST['userId']) : 0;
+        $userId =
+            isset($_POST['userId']) ?
+            $this->sanitizationService->sanitizeInt(wp_unslash($_POST['userId'])) : 0;
         $apiEndpoint = isset($_POST['_apiEndpoint'])
-        ? $this->sanitizationService->sanitizeUrl($_POST['_apiEndpoint']) : '';
+        ? $this->sanitizationService->sanitizeUrl(wp_unslash($_POST['_apiEndpoint'])) : '';
 
 
         if (!$userId) {
@@ -97,15 +99,15 @@ class AjaxController
         }
 
         // Capture the user details HTML for response
-       try{
+        try {
             ob_start();
             require_once SYDE_USER_LISTING_PLUGIN_DIR . 'src/Views/single-user.php';
             $userDetailsHtml = ob_get_clean();
-       } catch (\Exception $e) {
+        } catch (\Exception $error) {
             ob_end_clean();
-            wp_send_json_error($e->getMessage());
+            wp_send_json_error($error->getMessage());
             return;
-       }
+        }
 
 
         // Return the success response with HTML content
@@ -115,10 +117,10 @@ class AjaxController
 
     /**
      * Remove cache.
-     * 
+     *
      * This function removes the cache for the given url in the admin panel
      * and returns a success or error message.
-     * 
+     *
      * @return void
      * @since 1.0.0
      * @access public
@@ -126,7 +128,7 @@ class AjaxController
     public function removeCache(): void
     {
         $nonce = isset($_POST['_wpnonce']) ?
-                $this->sanitizationService->sanitizeTextField(($_POST['_wpnonce']))
+                $this->sanitizationService->sanitizeTextField(wp_unslash($_POST['_wpnonce']))
             : '';
 
         if (!wp_verify_nonce($nonce, 'syde_user_listing_admin')) {
@@ -135,7 +137,9 @@ class AjaxController
         }
 
         // ge the data and encode it in md5 to prepare for cache key
-        $data = isset($_POST['data']) ? $this->sanitizationService->sanitizeTextField(($_POST['data'])) : '';
+        $data = isset($_POST['data'])
+                ? $this->sanitizationService->sanitizeTextField(wp_unslash($_POST['data']))
+                : '';
 
         if (!$data) {
             wp_send_json_error('Invalid data');
@@ -145,9 +149,9 @@ class AjaxController
         $cacheKey = md5($data);
 
         try {
-            $this->cacheController->deleteCache('data_list_'.$cacheKey);
-        } catch (\Exception $e) {
-            wp_send_json_error($e->getMessage());
+            $this->cacheController->deleteCache('data_list_' . $cacheKey);
+        } catch (\Exception $error) {
+            wp_send_json_error($error->getMessage());
             return;
         }
 

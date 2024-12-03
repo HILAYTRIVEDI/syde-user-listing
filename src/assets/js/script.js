@@ -1,27 +1,26 @@
-(function ()
-{
+(function () {
     let tempDataId = 0;
 
     const apiEndpoint = document.querySelector('#user-additional-data').dataset.apiUrl;
 
-    document.querySelectorAll('.user-link').forEach(link =>
-    {
-        link.addEventListener('click', function (e)
+    document.querySelectorAll('.user-link').forEach(
+        link =>
         {
-            e.preventDefault();
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
 
-            const dataId = e.target.dataset.id;
+                const dataId = e.target.dataset.id;
 
-            if (tempDataId === dataId)
-            {
-                return;
-            }
+                if (tempDataId === dataId) {
+                    return;
+                }
 
-            tempDataId = dataId;
+                tempDataId = dataId;
 
-            fetchUserData(dataId);
-        });
-    });
+                fetchUserData(dataId);
+            });
+        }
+    );
 
     /**
      * Fetch user data via AJAX
@@ -43,20 +42,22 @@
             body: postData,
         })
             .then(response => response.json())
-            .then(data =>
-            {
-                if (data.success)
+            .then(
+                data =>
                 {
-                    displayUserData(data.data);
-                } else
-                {
-                    displayError(data.data || 'An error occurred while fetching user details.');
+                    if (data.success) {
+                        displayUserData(data.data);
+                    } else {
+                        displayError(data.data || 'An error occurred while fetching user details.');
+                    }
                 }
-            })
-            .catch(error =>
-            {
-                displayError('Failed to fetch user details.' + error);
-            });
+            )
+            .catch(
+                error =>
+                {
+                    displayError('Failed to fetch user details.' + error);
+                }
+            );
     }
 
     /**
@@ -84,6 +85,6 @@
      */
     function displayError(message)
     {
-        document.getElementById('user-additional-data').innerHTML = `<div class="syde-user-listing-error">${message}</div>`;
+        document.getElementById('user-additional-data').innerHTML = ` < div class = "syde-user-listing-error" > ${message} < / div > `;
     }
 })();

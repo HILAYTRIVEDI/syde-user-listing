@@ -55,6 +55,27 @@ class ShortCodeController
     }
 
     /**
+     * Helper function to check if the shortcode is present in the post content.
+     *
+     * This function checks if the shortcode is present in the post content and
+     * returns a boolean value.
+     *
+     * @return bool Returns true if the shortcode is present, false otherwise.
+     * @since 1.0.0
+     */
+    private function isShortcodePresent(): bool
+    {
+        global $post;
+
+        /**
+         * Custom hook to modify the $post object before checking for the shortcode.
+         */
+        do_action('syde_user_listing_is_shortcode_present', $post);
+
+        return isset($post->post_content) && has_shortcode($post->post_content, 'syde_user_listing');
+    }
+
+    /**
      * Enqueue the style file for the frontend.
      *
      * This method adds the CSS stylesheet for the Syde User Listing plugin to
@@ -66,13 +87,15 @@ class ShortCodeController
      */
     public function enqueueStyle(): void
     {
-        wp_enqueue_style(
-            'syde-user-listing-style',
-            SYDE_USER_LISTING_PLUGIN_URL . '/src/assets/css/style.css',
-            [],
-            SYDE_USER_LISTING_VERSION,
-            'all'
-        );
+        if ($this->isShortcodePresent()) {
+            wp_enqueue_style(
+                'syde-user-listing-style',
+                SYDE_USER_LISTING_PLUGIN_URL . '/src/assets/css/style.css',
+                [],
+                SYDE_USER_LISTING_VERSION,
+                'all'
+            );
+        }
     }
 
     /**
@@ -88,22 +111,24 @@ class ShortCodeController
      */
     public function enqueueScript(): void
     {
-        wp_enqueue_script(
-            'syde-user-listing-script',
-            SYDE_USER_LISTING_PLUGIN_URL . '/src/assets/js/script.js',
-            ['jquery'],
-            SYDE_USER_LISTING_VERSION,
-            true
-        );
+        if ($this->isShortcodePresent()) {
+            wp_enqueue_script(
+                'syde-user-listing-script',
+                SYDE_USER_LISTING_PLUGIN_URL . '/src/assets/js/script.js',
+                ['jquery'],
+                SYDE_USER_LISTING_VERSION,
+                true
+            );
 
-        wp_localize_script(
-            'syde-user-listing-script',
-            'syde_user_listing',
-            [
-                'ajax_url' => admin_url('admin-ajax.php'),
-                'nonce' => wp_create_nonce('syde_user_listing'),
-            ]
-        );
+            wp_localize_script(
+                'syde-user-listing-script',
+                'syde_user_listing',
+                [
+                    'ajax_url' => admin_url('admin-ajax.php'),
+                    'nonce' => wp_create_nonce('syde_user_listing'),
+                ]
+            );
+        }
     }
 
     /**
@@ -177,7 +202,7 @@ class ShortCodeController
          */
         $data = apply_filters('syde_user_listing_users', $data, $atts);
 
-       try{
+        try {
             // Capture the output of the table info template.
             ob_start();
             include_once SYDE_USER_LISTING_PLUGIN_DIR . 'src/Views/table-info.php';
@@ -189,13 +214,17 @@ class ShortCodeController
             $output .= $content;
 
             return wp_kses_post($output);
-       } catch (\Exception $e) {
+        } catch (\Exception $error) {
             ob_end_clean();
             printf(
-                __('An error occurred while rendering the shortcode: %s', 'syde-user-listing'),
-                esc_html($e->getMessage())
+                /* translators: error message comming from the $error object. */
+                esc_html__(
+                    'An error occurred while rendering the shortcode: %s',
+                    'syde-user-listing'
+                ),
+                esc_html($error->getMessage())
             );
             return '';
-       }
+        }
     }
 }

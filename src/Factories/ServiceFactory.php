@@ -8,7 +8,6 @@ use Syde\UserListing\Services\APIService;
 use Syde\UserListing\Services\CacheService;
 use Syde\UserListing\Services\SydeSanitizationService;
 use Syde\UserListing\Services\SydeErrorService;
-use Syde\UserListing\Services\AllowTagsService;
 
 /**
  * Factory class to create service instances.
@@ -61,7 +60,6 @@ class ServiceFactory
         return new SydeSanitizationService();
     }
 
-
     /**
      * Create an instance of SydeErrorService.
      *
@@ -74,20 +72,5 @@ class ServiceFactory
     public static function createErrorService(): SydeErrorService
     {
         return new SydeErrorService();
-    }
-
-
-    /**
-     * Create an instance of AllowTagsService.
-     *
-     * Provides a mechanism for managing allowed tags and their attributes.
-     *
-     * @since 1.0.0
-     *
-     * @return AllowTagsService The created AllowTagsService instance.
-     */
-    public static function createAllowTagsService(): AllowTagsService
-    {
-        return new AllowTagsService();
     }
 }
