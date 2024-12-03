@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Syde\UserListing\Controllers;
 
 use Syde\UserListing\Services\SydeSanitizationService;
-use Syde\UserListing\Services\AllowTagsService;
 
 /**
  * Class AdminController
- * 
+ *
  * THis class is responsible for handling the admin page functionalities in the
  * Syde User Listing plugin.It includes registering the admin page, registering
  * the required settings fields, and rendering the admin page.
@@ -22,13 +21,12 @@ class AdminController
         private MenuPageController $menuPageController,
         private CacheController $cacheController,
         private SydeSanitizationService $sanitizationService,
-        private AllowTagsService $allowTagsService
     ) {
     }
 
     /**
      * Register the admin menu.
-     * 
+     *
      * This method registers the admin menu and initializes the admin page.
      * It also registers the required settings fields and actions.
      *
@@ -47,7 +45,7 @@ class AdminController
 
     /**
      * Enqueue the admin page script.
-     * 
+     *
      * This method enqueues the admin page script to handle the removal of the cache.
      *
      * @return void
@@ -76,7 +74,7 @@ class AdminController
 
     /**
      * Add the API endpoint menu.
-     * 
+     *
      * This method adds the API endpoint menu to the admin menu to allow users
      * to configure the Default API Endpoint URL and additional settings.
      *
@@ -99,7 +97,7 @@ class AdminController
 
     /**
      * Render the API endpoint page.
-     * 
+     *
      * This method renders the admin page for configuring the API endpoint URL
      * and it utilizes the `registerMenuPageField` method to register the
      * settings fields. It also adds the `additional_api_endpoint_fields` hook
@@ -131,7 +129,7 @@ class AdminController
 
     /**
      * Render the admin page.
-     * 
+     *
      * This method renders the admin page for configuring the API endpoint URL and
      * also allows to add the specific url for removing the cache.
      *
@@ -143,23 +141,16 @@ class AdminController
      */
     public function renderApiEndpointPage(): void
     {
-        try{
-            ob_start();
-            include_once SYDE_USER_LISTING_PLUGIN_DIR . 'src/Views/admin-page.php';
-            $output = ob_get_clean();
-
-            echo wp_kses($output, 
-                $this->allowTagsService
-                ->getAllowedTagsAtributes(
-                    [
-                        'table', 'tr', 'th', 'td', 'input', 'h1', 'form', 'button'
-                    ]
-            ));
-
-        } catch (\Exception $e) {
+        try {
+            require_once SYDE_USER_LISTING_PLUGIN_DIR . 'src/Views/admin-page.php';
+        } catch (\Exception $error) {
             printf(
-               __('An error occurred while rendering the admin page: %s', 'syde-user-listing'),
-               esc_html($e->getMessage())
+                /* translators: error message comming from the $error object. */
+                esc_html__(
+                    'An error occurred while rendering the admin page: %s',
+                    'syde-user-listing'
+                ),
+                esc_html($error->getMessage())
             );
         }
     }

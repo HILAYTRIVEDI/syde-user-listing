@@ -18,12 +18,10 @@ class APIService implements APIServiceInterface
 {
     /**
      * The base URL for API requests.
-     * 
-     * @var string
+     *
      */
     private string $url;
 
-    /** @var SydeErrorService */
     private SydeErrorService $errorService;
 
     /**
@@ -77,8 +75,9 @@ class APIService implements APIServiceInterface
         // Ensure the response is a valid JSON object.
         if (json_last_error() !== JSON_ERROR_NONE) {
             return $this->errorService->handleError(
-                'invalid_json', 
-                'Invalid JSON response from the API.');
+                'invalid_json',
+                'Invalid JSON response from the API.'
+            );
         }
 
         // Allow modifications to the decoded response via a filter.
