@@ -204,9 +204,5 @@ Once the plugin is configured, here are the steps to display table on the front 
    This efficient auto-wiring mechanism ensures reusable, clean, and manageable dependency handling while adhering to PSR-11 standards.
    
 
-## Contributing
-
-I welcome your contributions  to this project! Please fork the repository, create a feature branch, and submit a pull request with your changes. Make sure to follow the coding standards and write tests for any new functionality.
-
 ## License
 This plugin is licensed under the GNU General Public License v3.0 or later (GPL-3.0-or-later). See the [LICENSE](LICENSE) file for details.
