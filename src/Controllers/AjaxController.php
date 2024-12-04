@@ -79,8 +79,9 @@ class AjaxController
      */
     public function fetchUserDetails(): void
     {
-        $nonce = isset($_POST['_wpnonce']) ?
-                $this->sanitizationService->sanitizeTextField(wp_unslash($_POST['_wpnonce']))
+        $nonce =
+            isset($_POST['_wpnonce']) ?
+            $this->sanitizationService->sanitizeTextField(wp_unslash($_POST['_wpnonce']))
             : '';
 
         if (!wp_verify_nonce($nonce, 'syde_user_listing')) {
@@ -91,9 +92,13 @@ class AjaxController
         // Get and validate the user ID from POST
         $userId =
             isset($_POST['userId']) ?
-            $this->sanitizationService->sanitizeInt(wp_unslash($_POST['userId'])) : 0;
-        $apiEndpoint = isset($_POST['_apiEndpoint'])
-        ? $this->sanitizationService->sanitizeUrl(wp_unslash($_POST['_apiEndpoint'])) : '';
+            $this->sanitizationService->sanitizeInt(wp_unslash($_POST['userId']))
+            : 0;
+
+        $apiEndpoint =
+            isset($_POST['_apiEndpoint'])
+            ? $this->sanitizationService->sanitizeUrl(wp_unslash($_POST['_apiEndpoint']))
+            : '';
 
 
         if (!$userId) {
@@ -137,8 +142,9 @@ class AjaxController
      */
     public function removeCache(): void
     {
-        $nonce = isset($_POST['_wpnonce']) ?
-                $this->sanitizationService->sanitizeTextField(wp_unslash($_POST['_wpnonce']))
+        $nonce =
+            isset($_POST['_wpnonce']) ?
+            $this->sanitizationService->sanitizeTextField(wp_unslash($_POST['_wpnonce']))
             : '';
 
         if (!wp_verify_nonce($nonce, 'syde_user_listing_admin')) {
@@ -147,9 +153,10 @@ class AjaxController
         }
 
         // ge the data and encode it in md5 to prepare for cache key
-        $data = isset($_POST['data'])
-                ? $this->sanitizationService->sanitizeTextField(wp_unslash($_POST['data']))
-                : '';
+        $data =
+            isset($_POST['data'])
+            ? $this->sanitizationService->sanitizeTextField(wp_unslash($_POST['data']))
+            : '';
 
         if (!$data) {
             wp_send_json_error('Invalid data');
