@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file contains the ServiceFactory class for the Syde User Listing plugin
+ * that creates service instances for the plugin.
+ *
+ * @package Syde\UserListing\Factories
+ *
+ * @since 1.0.0
+ */
+
 declare(strict_types=1);
 
 namespace Syde\UserListing\Factories;

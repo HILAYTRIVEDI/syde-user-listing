@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file contains the admin controller class for the Syde User Listing plugin
+ * that handles the admin page functionalities.
+ *
+ * @package Syde\UserListing\Controllers
+ *
+ * @since 1.0.0
+ */
+
 declare(strict_types=1);
 
 namespace Syde\UserListing\Controllers;

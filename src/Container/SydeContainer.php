@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * This file contains the container class for the Syde User Listing plugin that
+ * is used to manage dependencies and provide a simple way to resolve classes
+ * and interfaces.
+ *
+ * @package Syde\UserListing\Container
+ *
+ * @since 1.0.0
+ */
+
 declare(strict_types=1);
 
 namespace Syde\UserListing\Container;

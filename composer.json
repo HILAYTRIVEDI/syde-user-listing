@@ -5,9 +5,9 @@
     "keywords": ["wordpress", "user", "listing", "dummy", "dummy data", "dummy data generator"],
     "type": "wordpress-plugin",
     "scripts": {
-        "phpcs": "phpcs --standard=phpcs.xml.dist",
-        "phpcbf": "phpcbf --standard=phpcs.xml.dist",
-        "phpunit": "phpunit"
+        "phpcs": "vendor/bin/phpcs --standard=Inpsyde ./src",
+        "phpcbf": "vendor/bin/phpcbf --standard=Inpsyde ./src",
+        "phpunit": "vendor/bin/phpunit"
     },
     "authors": [
         {

@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * This file contains the Ajax controller class for the Syde User Listing plugin
+ * that handles the AJAX requests for fetching user details and removing the cache.
+ *
+ *
+ * @package Syde\UserListing\Controllers
+ *
+ * @since 1.0.0
+ */
+
 declare(strict_types=1);
 
 namespace Syde\UserListing\Controllers;
