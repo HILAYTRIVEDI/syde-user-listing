@@ -6,15 +6,34 @@ namespace Syde\UserListing\Tests;
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Parent class for all unit tests.
+ * 
+ * @since 1.0.0
+ */
 class SydeUserListingTest extends TestCase
 {
 
-    public function setup(): void
+    /**
+     * Sets up the test environment.
+     * 
+     * @since 1.0.0
+     * 
+     * @return void
+     */
+    protected function setup(): void
     {
         parent::setup();
     }
 
-    public function tearDown(): void
+    /**
+     * Tears down the test environment.
+     * 
+     * @since 1.0.0
+     * 
+     * @return void
+     */
+    protected function tearDown(): void
     {
         parent::tearDown();
     }

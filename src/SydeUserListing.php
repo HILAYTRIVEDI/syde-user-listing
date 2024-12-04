@@ -17,16 +17,6 @@ use Syde\UserListing\Controllers\AjaxController;
  */
 final class SydeUserListing
 {
-    /**
-     * Constructor.
-     *
-     * @param SydeContainer $container The dependency injection container.
-     * @since 1.0.0
-     */
-    public function __construct(private SydeContainer $container)
-    {
-        $this->container = $container;
-    }
 
     /**
      * Bootstrap the plugin.
@@ -38,24 +28,9 @@ final class SydeUserListing
      */
     public static function bootstrap(): void
     {
-        $plugin = new self(new SydeContainer());
-        $plugin->registerControllers();
-    }
-
-    /**
-     * Register necessary plugin services.
-     *
-     * This method ensures that controllers and other services are
-     * retrieved from the container and properly initialized.
-     *
-     * @return void
-     * @throws \RuntimeException If a required service is not available.
-     * @since 1.0.0
-     */
-    public function registerControllers(): void
-    {
-        $this->container->get(AdminController::class)?->register();
-        $this->container->get(ShortcodeController::class)->register();
-        $this->container->get(AjaxController::class)->register();
+        $plugin = new SydeContainer();
+        $plugin->get(AdminController::class)?->register();
+        $plugin->get(ShortcodeController::class)->register();
+        $plugin->get(AjaxController::class)->register();
     }
 }
