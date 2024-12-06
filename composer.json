@@ -1,4 +1,5 @@
 {
+    "version": "1.0.0",
     "name": "syde/syde-user-listing",
     "description": "This Plugin will list the dummy data of users",
     "license": "GPl3.0-or-later",
@@ -7,7 +8,11 @@
     "scripts": {
         "phpcs": "vendor/bin/phpcs --standard=Inpsyde ./src/",
         "phpcbf": "vendor/bin/phpcbf --standard=Inpsyde ./src/",
-        "phpunit": "vendor/bin/phpunit"
+        "phpunit": "vendor/bin/phpunit",
+        "package": [
+            "composer install --no-dev --optimize-autoloader",
+            "composer archive --format=zip"
+        ]
     },
     "authors": [
         {
