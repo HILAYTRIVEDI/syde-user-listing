@@ -5,8 +5,8 @@
     "keywords": ["wordpress", "user", "listing", "dummy", "dummy data", "dummy data generator"],
     "type": "wordpress-plugin",
     "scripts": {
-        "phpcs": "vendor/bin/phpcs --standard=Inpsyde ./src",
-        "phpcbf": "vendor/bin/phpcbf --standard=Inpsyde ./src",
+        "phpcs": "vendor/bin/phpcs --standard=Inpsyde ./src/",
+        "phpcbf": "vendor/bin/phpcbf --standard=Inpsyde ./src/",
         "phpunit": "vendor/bin/phpunit"
     },
     "authors": [
@@ -40,7 +40,6 @@
     },
     "require-dev": {
         "inpsyde/php-coding-standards": "^2@dev",
-        "phpunit/phpunit": "^11.4",
-        "10up/wp_mock": "^0.4.2"
+        "phpunit/phpunit": "^11.4"
     }
 }

@@ -12,7 +12,7 @@ class SydeContainerTest extends TestCase
     public function testSetAndGetBinding()
     {
         $container = new SydeContainer();
-        $container->set('test', fn() => new \stdClass());
+        $container->set('test', static fn () => new \stdClass());
 
         $this->assertInstanceOf(\stdClass::class, $container->get('test'));
     }
@@ -21,7 +21,7 @@ class SydeContainerTest extends TestCase
     {
         $container = new SydeContainer();
         $instance = new \stdClass();
-        $container->set('test', fn() => $instance);
+        $container->set('test', static fn () => $instance);
 
         $this->assertSame($instance, $container->get('test'));
     }
@@ -29,7 +29,7 @@ class SydeContainerTest extends TestCase
     public function testHasBinding()
     {
         $container = new SydeContainer();
-        $container->set('test', fn() => new \stdClass());
+        $container->set('test', static fn () => new \stdClass());
 
         $this->assertTrue($container->has('test'));
         $this->assertFalse($container->has('nonexistent'));
@@ -46,7 +46,7 @@ class SydeContainerTest extends TestCase
     public function testResolveClassWithConstructor()
     {
         $container = new SydeContainer();
-        $container->set(Dependency::class, fn() => new Dependency());
+        $container->set(Dependency::class, static fn () => new Dependency());
 
         $instance = $container->get(ClassWithDependency::class);
 

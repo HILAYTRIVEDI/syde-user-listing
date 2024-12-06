@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class SydeUserListingTest extends TestCase
 {
-
     public function setup(): void
     {
         parent::setup();
@@ -19,4 +18,3 @@ class SydeUserListingTest extends TestCase
         parent::tearDown();
     }
 }
-

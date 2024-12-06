@@ -10,12 +10,11 @@ use Syde\UserListing\Controllers\MenuPageController;
 use Syde\UserListing\Controllers\CacheController;
 use Syde\UserListing\Services\SydeSanitizationService;
 
-
 class AdminControllerTest extends SydeUserListingTest
 {
     /**
      * Helper function to create AdminController with mocked dependencies.
-     * 
+     *
      * @return AdminController
      */
     private function createAdminController(): AdminController
@@ -25,15 +24,15 @@ class AdminControllerTest extends SydeUserListingTest
         $sydeSanitizationService = $this->createMock(SydeSanitizationService::class);
 
         return new AdminController(
-            $menuPageControllerMock, 
-            $cacheControllerMock, 
+            $menuPageControllerMock,
+            $cacheControllerMock,
             $sydeSanitizationService,
         );
     }
 
     /**
      * Test the register method of the AdminController.
-     * 
+     *
      * @return void
      */
     public function testRegister(): void
@@ -47,7 +46,7 @@ class AdminControllerTest extends SydeUserListingTest
 
     /**
      * Test the addApiEndpointMenu method of the AdminController.
-     * 
+     *
      * @return void
      */
     public function testAddApiEndpointMenu(): void
@@ -61,7 +60,7 @@ class AdminControllerTest extends SydeUserListingTest
 
     /**
      * Test the registerAPIEndpointFields method of the AdminController.
-     * 
+     *
      * @return void
      */
     public function testRegisterAPIEndpointFields(): void
@@ -75,7 +74,7 @@ class AdminControllerTest extends SydeUserListingTest
 
     /**
      * Test the renderApiEndpointPage method of the AdminController.
-     * 
+     *
      * @return void
      */
     public function testRenderApiEndpointPage(): void

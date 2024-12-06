@@ -15,7 +15,7 @@ class CacheServiceTest extends SydeUserListingTest
 {
     /**
      * Test the ReturnCache method of the CacheService.
-     * 
+     *
      * @return void
      */
     public function testReturnCache(): void
@@ -40,7 +40,7 @@ class CacheServiceTest extends SydeUserListingTest
 
     /**
      * Test the CacheDataWithExpiration method of the CacheService.
-     * 
+     *
      * @return void
      */
     public function testCacheDataWithExpiration(): void
@@ -65,7 +65,7 @@ class CacheServiceTest extends SydeUserListingTest
 
     /**
      * Test the DeleteCache method of the CacheService.
-     * 
+     *
      * @return void
      */
     public function testDeleteCache(): void
@@ -88,7 +88,7 @@ class CacheServiceTest extends SydeUserListingTest
 
     /**
      * Test the HasCache method of the CacheService.
-     * 
+     *
      * @return void
      */
     public function testHasCache(): void

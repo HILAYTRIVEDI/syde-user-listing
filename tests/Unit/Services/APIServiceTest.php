@@ -12,7 +12,7 @@ class APIServiceTest extends SydeUserListingTest
 {
     /**
      * Test the fetch method of the APIService.
-     * 
+     *
      * @return void
      */
     public function testFetch(): void

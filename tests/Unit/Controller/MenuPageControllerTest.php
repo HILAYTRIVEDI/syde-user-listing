@@ -11,7 +11,7 @@ class MenuPageControllerTest extends SydeUserListingTest
 {
     /**
      * Test the registerMenuPageField method of the MenuPageController.
-     * 
+     *
      * @return void
      */
     public function testRegisterMenuPageField(): void
