@@ -40,7 +40,6 @@
     },
     "require-dev": {
         "inpsyde/php-coding-standards": "^2@dev",
-        "phpunit/phpunit": "^11.4",
-        "brain/monkey": "^2.6"
+        "phpunit/phpunit": "^11.4"
     }
 }
