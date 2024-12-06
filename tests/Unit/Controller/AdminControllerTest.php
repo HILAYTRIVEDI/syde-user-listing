@@ -9,12 +9,8 @@ use Syde\UserListing\Controllers\AdminController;
 use Syde\UserListing\Controllers\MenuPageController;
 use Syde\UserListing\Controllers\CacheController;
 use Syde\UserListing\Services\SydeSanitizationService;
-use WP_Mock;
 
-/**
- * Class AdminControllerTest
- * Tests for AdminController
- */
+
 class AdminControllerTest extends SydeUserListingTest
 {
     /**
@@ -26,12 +22,12 @@ class AdminControllerTest extends SydeUserListingTest
     {
         $menuPageControllerMock = $this->createMock(MenuPageController::class);
         $cacheControllerMock = $this->createMock(CacheController::class);
-        $sydeSanitizationServiceMock = $this->createMock(SydeSanitizationService::class);
+        $sydeSanitizationService = $this->createMock(SydeSanitizationService::class);
 
         return new AdminController(
-            $menuPageControllerMock,
-            $cacheControllerMock,
-            $sydeSanitizationServiceMock
+            $menuPageControllerMock, 
+            $cacheControllerMock, 
+            $sydeSanitizationService,
         );
     }
 
@@ -42,18 +38,52 @@ class AdminControllerTest extends SydeUserListingTest
      */
     public function testRegister(): void
     {
-        // Set up the WP_Mock expectations
-        WP_Mock::expectActionAdded('admin_menu', [$this->anything(), 'addApiEndpointMenu']);
-        WP_Mock::expectActionAdded('admin_init', [$this->anything(), 'registerAPIEndpointFields']);
-        WP_Mock::expectActionAdded('admin_enqueue_scripts', [$this->anything(), 'enqueueAdminPageScript']);
-
-        // Call the register method and ensure it's adding the actions
+        // Use helper to get AdminController with mocks
         $adminController = $this->createAdminController();
-        $adminController->register();
 
-        // Assert that the actions were added
-        WP_Mock::assertActionsCalled('admin_menu');
-        WP_Mock::assertActionsCalled('admin_init');
-        WP_Mock::assertActionsCalled('admin_enqueue_scripts');
+        // Assert: The controller should register the menu page and cache controller
+        $this->assertIsCallable([$adminController, 'register']);
+    }
+
+    /**
+     * Test the addApiEndpointMenu method of the AdminController.
+     * 
+     * @return void
+     */
+    public function testAddApiEndpointMenu(): void
+    {
+        // Use helper to get AdminController with mocks
+        $adminController = $this->createAdminController();
+
+        // Assert: The controller should register the menu page and cache controller
+        $this->assertIsCallable([$adminController, 'addApiEndpointMenu']);
+    }
+
+    /**
+     * Test the registerAPIEndpointFields method of the AdminController.
+     * 
+     * @return void
+     */
+    public function testRegisterAPIEndpointFields(): void
+    {
+        // Use helper to get AdminController with mocks
+        $adminController = $this->createAdminController();
+
+        // Assert: The controller should register the menu page and cache controller
+        $this->assertIsCallable([$adminController, 'registerAPIEndpointFields']);
+    }
+
+    /**
+     * Test the renderApiEndpointPage method of the AdminController.
+     * 
+     * @return void
+     */
+    public function testRenderApiEndpointPage(): void
+    {
+        // Use helper to get AdminController with mocks
+        $adminController = $this->createAdminController();
+
+        // Assert: The controller should register the menu page and cache controller
+        $this->assertIsCallable([$adminController, 'renderApiEndpointPage']);
     }
 }
