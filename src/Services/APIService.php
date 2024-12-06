@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file contains the APIService class for the Syde User Listing plugin
+ * that handles API requests and responses with WordPress HTTP functions.
+ *
+ * @package Syde\UserListing\Services
+ *
+ * @since 1.0.0
+ */
+
 declare(strict_types=1);
 
 namespace Syde\UserListing\Services;

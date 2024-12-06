@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file contains the ErrorService class for the Syde User Listing plugin
+ * that handles errors and exceptions.
+ *
+ * @package Syde\UserListing\Services
+ *
+ * @since 1.0.0
+ */
+
 declare(strict_types=1);
 
 namespace Syde\UserListing\Services;

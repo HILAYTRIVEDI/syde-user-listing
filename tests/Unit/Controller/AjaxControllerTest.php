@@ -5,17 +5,16 @@ declare(strict_types=1);
 namespace Syde\UserListing\Tests\Unit\Controller;
 
 use Syde\UserListing\Tests\SydeUserListingTest;
-use \Syde\UserListing\Controllers\AjaxController;
-use \Syde\UserListing\Controllers\CacheController;
-use \Syde\UserListing\Services\APIService;
+use Syde\UserListing\Controllers\AjaxController;
+use Syde\UserListing\Controllers\CacheController;
+use Syde\UserListing\Services\APIService;
 use Syde\UserListing\Services\SydeSanitizationService;
 
-
-class AjaxControllerTest extends SydeUserListingTest{
-
+class AjaxControllerTest extends SydeUserListingTest
+{
     /**
      * Helper function to create AjaxController with mocked dependencies.
-     * 
+     *
      * @return AjaxController
      */
     private function createAjaxController(): AjaxController
@@ -29,7 +28,7 @@ class AjaxControllerTest extends SydeUserListingTest{
 
     /**
      * Test the register method of the AjaxController.
-     * 
+     *
      * @return void
      */
     public function testRegisters(): void
@@ -44,17 +43,16 @@ class AjaxControllerTest extends SydeUserListingTest{
 
     /**
      * Test the fetchUserDetails method of the AjaxController.
-     * 
+     *
      * @return void
      */
-    public function testfetchUserDetails(): void{
+    public function testfetchUserDetails(): void
+    {
 
         // Use helper to get AjaxController with mocks
         $ajaxController = $this->createAjaxController();
 
         // Assert: The controller should register the menu page and cache controller
         $this->assertIsCallable([$ajaxController, 'fetchUserDetails']);
-    
     }
-  
 }

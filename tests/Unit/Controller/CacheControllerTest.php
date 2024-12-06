@@ -9,12 +9,11 @@ use Syde\UserListing\Factories\ServiceFactory;
 use Syde\UserListing\Services\SydeErrorService;
 use Syde\UserListing\Controllers\CacheController;
 
-
 class CacheControllerTest extends SydeUserListingTest
 {
     /**
      * Helper function to create CacheController with mocked dependencies.
-     * 
+     *
      * @return CacheController
      */
     private function createCacheController(): CacheController
@@ -23,14 +22,14 @@ class CacheControllerTest extends SydeUserListingTest
         $errorServiceMock = $this->createMock(SydeErrorService::class);
 
         return new CacheController(
-            $serviceFactoryMock, 
+            $serviceFactoryMock,
             $errorServiceMock,
         );
     }
 
     /**
      * Test the userCache method of the CacheController.
-     * 
+     *
      * @return void
      */
     public function testUserCache(): void
@@ -44,7 +43,7 @@ class CacheControllerTest extends SydeUserListingTest
 
     /**
      * Test the cacheDataWithExpiration method of the CacheController.
-     * 
+     *
      * @return void
      */
     public function testCacheDataWithExpiration(): void
@@ -58,7 +57,7 @@ class CacheControllerTest extends SydeUserListingTest
 
     /**
      * Test the deleteCache method of the CacheController.
-     * 
+     *
      * @return void
      */
     public function testDeleteCache(): void

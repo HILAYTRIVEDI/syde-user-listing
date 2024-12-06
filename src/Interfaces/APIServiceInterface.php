@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file contains the APIServiceInterface interface for the Syde User Listing plugin
+ * that defines the contract for an API service.
+ *
+ * @package Syde\UserListing\Interfaces
+ *
+ * @since 1.0.0
+ */
+
 declare(strict_types=1);
 
 namespace Syde\UserListing\Interfaces;

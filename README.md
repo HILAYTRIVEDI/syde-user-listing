@@ -1,6 +1,6 @@
 # Syde User Listing Plugin
 
-The Syde User Listing plugin allows you to fetch and display user data from an external API in WordPress. It offers a dynamic, user-friendly interface for displaying API responses in a table format, with additional features for managing and caching the data.
+The **Syde User Listing** plugin allows you to fetch, manage, and display user data from an external API within WordPress. It provides a user-friendly interface for displaying API responses in a dynamic table format, along with caching and configuration options.
 
 ## Requirements
 
@@ -71,7 +71,7 @@ The Syde User Listing plugin allows you to fetch and display user data from an e
    composer install
    ```
 
-3. Upload the plugin to your WordPress site by placing it in the `wp-content/plugins` directory.
+3. Upload the extracted plugin folder to the `wp-content/plugins/` directory of your WordPress installation.
 4. Activate the Syde User Listing plugin from the WordPress admin dashboard.
 
 ### 2. Manual Installation
@@ -80,34 +80,33 @@ The Syde User Listing plugin allows you to fetch and display user data from an e
 2. Extract the files and upload the plugin folder to `wp-content/plugins/`.
 3. Activate the plugin from the WordPress admin panel.
 
-## Configuration ( Optional )
+## Configuration (Optional)
 
-- These steps are not mandatory to make the plugin work but it just add support for the default API endpoint if non is given in the sortcode.
+These steps are not mandatory but will add support for the default API endpoint if none is given in the shortcode:
 
-1. Go to Settings → API Endpoint Settings in the WordPress dashboard.
-2. Enter the Default API Endpoint URL to the API that provides user data.
+1. Go to **Settings → API Endpoint Settings** in the WordPress dashboard.
+2. Enter the **Default API Endpoint URL** that provides user data.
 3. Add custom fields to the API configuration page using the `additional_api_endpoint_fields` action hook.
-4. Once configured, the user data will automatically be fetched and displayed in both the admin panel and the front end.
+4. Once configured, the plugin will automatically fetch user data and display it in both the admin panel and the front end via a shortcode.
 
 ## Features
 
-- API Data Fetching: Retrieve user data from an external API.
-- Caching: Uses WordPress Transients for caching API responses and improving performance.
-- Dynamic Table Display: Displays user data in an easily readable table format, allowing for dynamic adjustments.
-- Admin Settings Page: A dedicated page for configuring the API endpoint URL and additional settings.
+- **API Data Fetching**: Retrieve user data from an external API.
+- **Caching**: Uses WordPress Transients for caching API responses and improving performance.
+- **Dynamic Table Display**: Displays user data in an easily readable table format, with the ability to expand user details.
+- **Admin Settings Page**: A dedicated page for configuring the API endpoint URL and additional settings.
 
 ## Usage
 
 ### Front-End Display
 
-Once the plugin is configured, here are the steps to display table on the front end:
+Once the plugin is configured, you can display the data on the front end using the `[syde_user_listing]` shortcode. You can specify the `endpoint` as an attribute, and if it is not provided, the plugin will use the value from the admin settings.
 
-- The plugin provides a shortcode `syde_user_listing` you can pass the end point as a attribute to the shortcode, if the endpoint is blank it will take teh value from the admin input field. So the whole shortcode will look something like the below:
-
-```
+Example usage:
+```plaintext
 [syde_user_listing endpoint="https://jsonplaceholder.typicode.com/posts"]
 ```
- 
+
 - Data is displayed in a responsive table format.
 - Each user's details can be expanded to view additional information, including nested data.
 
@@ -205,4 +204,4 @@ Once the plugin is configured, here are the steps to display table on the front 
    
 
 ## License
-This plugin is licensed under the GNU General Public License v3.0 or later (GPL-3.0-or-later). See the [LICENSE](LICENSE) file for details.
+This plugin is licensed under the GNU General Public License v3.0 or later (GPL-3.0-or-later). See the [LICENSE](https://www.gnu.org/licenses/gpl-3.0.en.html) file for details.

@@ -1,9 +1,12 @@
 <?php
 
 /**
- * Exception for container-related errors.
+ * This file contains the ContainerException class for the Syde User Listing plugin
+ * that handles errors related to dependency injection or service resolution.
  *
  * @package Syde\UserListing\Exceptions
+ *
+ * @since 1.0.0
  */
 
 declare(strict_types=1);

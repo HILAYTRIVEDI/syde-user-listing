@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file contains the MenuPageController class for the Syde User Listing plugin
+ * that handles the registration of settings and menu page fields.
+ *
+ * @package Syde\UserListing\Controllers
+ *
+ * @since 1.0.0
+ */
+
 declare(strict_types=1);
 
 namespace Syde\UserListing\Controllers;

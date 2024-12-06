@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * This file contains the ShortCodeController class for the Syde User Listing plugin
+ * that handles the shortcode functionalities. It includes registering the
+ * shortcode, enqueueing the required scripts and styles, and rendering the
+ * shortcode output for displaying user listings.
+ *
+ * @package Syde\UserListing\Controllers
+ *
+ * @since 1.0.0
+ */
+
 declare(strict_types=1);
 
 namespace Syde\UserListing\Controllers;
