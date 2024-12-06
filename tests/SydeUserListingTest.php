@@ -5,18 +5,19 @@ declare(strict_types=1);
 namespace Syde\UserListing\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Brain\Monkey;
 
 class SydeUserListingTest extends TestCase
 {
-
-    public function setup(): void
+    protected function setUp(): void
     {
-        parent::setup();
+        parent::setUp();
+        Monkey\setUp();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
+        Monkey\tearDown();
         parent::tearDown();
     }
 }
-
