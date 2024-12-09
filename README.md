@@ -104,7 +104,7 @@ Once the plugin is configured, you can display the data on the front end using t
 
 Example usage:
 ```plaintext
-[syde_user_listing endpoint="https://jsonplaceholder.typicode.com/posts"]
+[syde_user_listing endpoint="https://jsonplaceholder.typicode.com/users"]
 ```
 
 - Data is displayed in a responsive table format.
