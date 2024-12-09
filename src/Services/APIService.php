@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Syde\UserListing\Services;
 
 use Syde\UserListing\Interfaces\APIServiceInterface;
-use Syde\UserListing\Services\SydeErrorService;
 
 /**
  * Class APIService
