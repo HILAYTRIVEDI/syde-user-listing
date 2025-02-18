@@ -22,7 +22,7 @@ declare(strict_types=1);
                 <td>
                     <input 
                     type="url" name="api_endpoint_url" 
-                    value="<?php echo esc_attr(get_option('api_endpoint_url')); ?>" 
+                    value="<?php echo esc_attr( get_option('api_endpoint_url') ? get_option( 'api_endpoint_url' ) : 'https://jsonplaceholder.typicode.com/users' ); ?>" 
                     class="regular-text"/>
                 </td>
             </tr>
