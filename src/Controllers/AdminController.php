@@ -63,6 +63,14 @@ class AdminController
      */
     public function enqueueAdminPageScript(): void
     {
+
+        // Get the current admin page slug
+        $current_page = get_current_screen();
+
+        if ($current_page->id !== 'toplevel_page_api_endpoint') {
+            return;
+        }
+
         wp_enqueue_script(
             'syde-user-listing-admin-script',
             SYDE_USER_LISTING_PLUGIN_URL . 'src/assets/js/admin-script.js',
